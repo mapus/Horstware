@@ -10,6 +10,7 @@ import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -34,6 +35,9 @@ public class ViewModelDetailsActivity extends Activity
 		dataSource = DataSourceFactory.createDataSource();
 		long modelId = getIntent().getExtras().getLong(ExtraKeys.MODEL_ID);
 		model = dataSource.loadVehicleModel(modelId);
+		
+		
+		
 		
 		fillLayoutWithContent();
 	}
@@ -78,6 +82,12 @@ public class ViewModelDetailsActivity extends Activity
 				{
 					ImageView imageView = (ImageView) findViewById(R.id.viewModelDetails_image);
 					imageView.setImageBitmap(bitmap);
+				}
+				else
+				{
+					ViewGroup layout = (ViewGroup) findViewById(R.id.viewModelDetails_layout);
+					View image = (View) findViewById(R.id.viewModelDetails_image);
+					layout.removeView(image);
 				}
 			}
 		}.execute();

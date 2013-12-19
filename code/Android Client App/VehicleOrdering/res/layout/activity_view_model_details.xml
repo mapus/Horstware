@@ -9,7 +9,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ViewModelDetailsActivity" >
+    tools:context=".ViewModelDetailsActivity"
+    android:id="@+id/viewModelDetails_layout" >
     
     <TextView
         android:id="@+id/viewModelDetails_name"

@@ -22,8 +22,9 @@
     <string name="order_modelLabel">Model:</string>
     <string name="order_modelNamePlaceholder">Model Name</string>
     <string name="order_amountLabel">Amount:</string>
-    <string name="order_deliveryLabel">Delivery:</string>
-    <string name="order_customerLabel">Customer:</string>
+    <string name="order_deliveryLabel">Delivery Date:</string>
+    <string name="order_firstNameLabel">First Name:</string>
+    <string name="order_lastNameLabel">Last Name:</string>
     <string name="order_submitLabel">Submit Order</string>
     
     <string name="searchOrders_filtersTitle">Filter by:</string>

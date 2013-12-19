@@ -29,24 +29,26 @@ public final class R {
         public static final int browseModels_modelListView=0x7f070001;
         public static final int browseModels_typeSpinner=0x7f070000;
         public static final int displaySearchResults_ordersList=0x7f070002;
-        public static final int listViewItem=0x7f070014;
+        public static final int listViewItem=0x7f070016;
         public static final int order_amount=0x7f070004;
-        public static final int order_customerName=0x7f070006;
+        public static final int order_customerFirstName=0x7f070006;
+        public static final int order_customerLastName=0x7f070007;
         public static final int order_deliveryDate=0x7f070005;
         public static final int order_modelName=0x7f070003;
-        public static final int searchOrders_firstNameFilter=0x7f070007;
-        public static final int searchOrders_lastNameFilter=0x7f070009;
-        public static final int searchOrders_modelFilter=0x7f07000a;
-        public static final int textView3=0x7f070008;
-        public static final int viewModelDetails_description=0x7f07000d;
-        public static final int viewModelDetails_image=0x7f07000c;
-        public static final int viewModelDetails_name=0x7f07000b;
-        public static final int viewModelDetails_price=0x7f07000e;
-        public static final int viewOrderDetails_amount=0x7f070012;
-        public static final int viewOrderDetails_customerName=0x7f070011;
-        public static final int viewOrderDetails_deliveryDate=0x7f070013;
-        public static final int viewOrderDetails_modelName=0x7f070010;
-        public static final int viewOrderDetails_orderLabel=0x7f07000f;
+        public static final int searchOrders_firstNameFilter=0x7f070008;
+        public static final int searchOrders_lastNameFilter=0x7f07000a;
+        public static final int searchOrders_modelFilter=0x7f07000b;
+        public static final int textView3=0x7f070009;
+        public static final int viewModelDetails_description=0x7f07000f;
+        public static final int viewModelDetails_image=0x7f07000e;
+        public static final int viewModelDetails_layout=0x7f07000c;
+        public static final int viewModelDetails_name=0x7f07000d;
+        public static final int viewModelDetails_price=0x7f070010;
+        public static final int viewOrderDetails_amount=0x7f070014;
+        public static final int viewOrderDetails_customerName=0x7f070013;
+        public static final int viewOrderDetails_deliveryDate=0x7f070015;
+        public static final int viewOrderDetails_modelName=0x7f070012;
+        public static final int viewOrderDetails_orderLabel=0x7f070011;
     }
     public static final class layout {
         public static final int activity_browse_models=0x7f030000;
@@ -60,23 +62,24 @@ public final class R {
     }
     public static final class string {
         public static final int app_name=0x7f050000;
-        public static final int loremIpsum=0x7f050023;
+        public static final int loremIpsum=0x7f050024;
         public static final int mainMenu_browseModels=0x7f050008;
         public static final int mainMenu_searchOrders=0x7f050009;
         public static final int order_amountLabel=0x7f050010;
-        public static final int order_amountValidationMessage=0x7f050024;
-        public static final int order_customerLabel=0x7f050012;
-        public static final int order_deliveryDateValidationMessage=0x7f050025;
+        public static final int order_amountValidationMessage=0x7f050025;
+        public static final int order_deliveryDateValidationMessage=0x7f050026;
         public static final int order_deliveryLabel=0x7f050011;
+        public static final int order_firstNameLabel=0x7f050012;
+        public static final int order_lastNameLabel=0x7f050013;
         public static final int order_modelLabel=0x7f05000e;
         public static final int order_modelNamePlaceholder=0x7f05000f;
-        public static final int order_submitLabel=0x7f050013;
-        public static final int searchOrders_filterHint=0x7f050018;
-        public static final int searchOrders_filtersTitle=0x7f050014;
-        public static final int searchOrders_firstNameLabel=0x7f050015;
-        public static final int searchOrders_lastNameLabel=0x7f050016;
-        public static final int searchOrders_modelLabel=0x7f050017;
-        public static final int searchOrders_startLabel=0x7f050019;
+        public static final int order_submitLabel=0x7f050014;
+        public static final int searchOrders_filterHint=0x7f050019;
+        public static final int searchOrders_filtersTitle=0x7f050015;
+        public static final int searchOrders_firstNameLabel=0x7f050016;
+        public static final int searchOrders_lastNameLabel=0x7f050017;
+        public static final int searchOrders_modelLabel=0x7f050018;
+        public static final int searchOrders_startLabel=0x7f05001a;
         public static final int title_activity_browse_models=0x7f050001;
         public static final int title_activity_display_search_results=0x7f050002;
         public static final int title_activity_main_menu=0x7f050003;
@@ -88,15 +91,15 @@ public final class R {
         public static final int viewModelDetails_namePlaceholder=0x7f05000a;
         public static final int viewModelDetails_orderLabel=0x7f05000d;
         public static final int viewModelDetails_pricePlaceholder=0x7f05000c;
-        public static final int viewOrderDetails_amountLabel=0x7f05001f;
-        public static final int viewOrderDetails_amountPlaceholder=0x7f050020;
-        public static final int viewOrderDetails_customerNameLabel=0x7f05001d;
-        public static final int viewOrderDetails_customerNamePlaceholder=0x7f05001e;
-        public static final int viewOrderDetails_deliveryDateLabel=0x7f050021;
-        public static final int viewOrderDetails_deliveryDatePlaceholder=0x7f050022;
-        public static final int viewOrderDetails_modelNameLabel=0x7f05001b;
-        public static final int viewOrderDetails_modelNamePlaceholder=0x7f05001c;
-        public static final int viewOrderDetails_orderLabel=0x7f05001a;
+        public static final int viewOrderDetails_amountLabel=0x7f050020;
+        public static final int viewOrderDetails_amountPlaceholder=0x7f050021;
+        public static final int viewOrderDetails_customerNameLabel=0x7f05001e;
+        public static final int viewOrderDetails_customerNamePlaceholder=0x7f05001f;
+        public static final int viewOrderDetails_deliveryDateLabel=0x7f050022;
+        public static final int viewOrderDetails_deliveryDatePlaceholder=0x7f050023;
+        public static final int viewOrderDetails_modelNameLabel=0x7f05001c;
+        public static final int viewOrderDetails_modelNamePlaceholder=0x7f05001d;
+        public static final int viewOrderDetails_orderLabel=0x7f05001b;
     }
     public static final class style {
         /** 

@@ -26,7 +26,8 @@ public class OrderActivity extends Activity
 	
 	private TextView tvAmount;
 	private TextView tvDeliveryDate;
-	private TextView tvCustomerName;
+	private TextView tvCustomerFirstName;
+	private TextView tvCustomerLastName;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -40,7 +41,8 @@ public class OrderActivity extends Activity
 		
 		tvAmount = (TextView) findViewById(R.id.order_amount);
 		tvDeliveryDate = (TextView) findViewById(R.id.order_deliveryDate);
-		tvCustomerName = (TextView) findViewById(R.id.order_customerName);
+		tvCustomerFirstName = (TextView) findViewById(R.id.order_customerFirstName);
+		tvCustomerLastName = (TextView) findViewById(R.id.order_customerLastName);
 		
 		setModelName();
 	}
@@ -136,12 +138,12 @@ public class OrderActivity extends Activity
 	
 	private String getFirstName ()
 	{
-		return tvCustomerName.getText().toString();
+		return tvCustomerFirstName.getText().toString();
 	}
 	
 	private String getLastName ()
 	{
-		return tvCustomerName.getText().toString();
+		return tvCustomerLastName.getText().toString();
 	}
 	
 	private int getAmount ()
