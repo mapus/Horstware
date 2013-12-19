@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <string name="app_name">Vehicle Ordering</string>
+    
+    <string name="title_activity_browse_models">Browse Models</string>
+    <string name="title_activity_display_search_results">Search Results</string>
+    <string name="title_activity_main_menu">Vehicle Ordering</string>
+    <string name="title_activity_order">Order</string>
+    <string name="title_activity_search_orders">Search Orders</string>
+    <string name="title_activity_view_model_details">Model Details</string>
+    <string name="title_activity_view_order_details">Order Details</string>
+    
+    <string name="mainMenu_browseModels">Browse Models</string>
+    <string name="mainMenu_searchOrders">Search Orders</string>
+    
+    <string name="viewModelDetails_namePlaceholder">Model Name</string>
+    <string name="viewModelDetails_imageDescription">Image of the Model</string>
+    <string name="viewModelDetails_pricePlaceholder">0.00€</string>
+    <string name="viewModelDetails_orderLabel">Make An Order</string>
+    
+    <string name="order_modelLabel">Model:</string>
+    <string name="order_modelNamePlaceholder">Model Name</string>
+    <string name="order_amountLabel">Amount:</string>
+    <string name="order_deliveryLabel">Delivery:</string>
+    <string name="order_customerLabel">Customer:</string>
+    <string name="order_submitLabel">Submit Order</string>
+    
+    <string name="searchOrders_filtersTitle">Filter by:</string>
+    <string name="searchOrders_firstNameLabel">First Name:</string>
+    <string name="searchOrders_lastNameLabel">Last Name:</string>
+    <string name="searchOrders_modelLabel">Model:</string>
+    <string name="searchOrders_filterHint">no filter</string>
+    <string name="searchOrders_startLabel">Start Search</string>
+    
+    <string name="viewOrderDetails_orderLabel">Order No.</string>
+    <string name="viewOrderDetails_modelNameLabel">Model:</string>
+    <string name="viewOrderDetails_modelNamePlaceholder">Model Name</string>
+    <string name="viewOrderDetails_customerNameLabel">Customer:</string>
+    <string name="viewOrderDetails_customerNamePlaceholder">Customer Name</string>
+    <string name="viewOrderDetails_amountLabel">Amount:</string>
+    <string name="viewOrderDetails_amountPlaceholder">Amount</string>
+    <string name="viewOrderDetails_deliveryDateLabel">Delivery Date:</string>
+    <string name="viewOrderDetails_deliveryDatePlaceholder">Deliver Date</string>
+    
+    <string name="loremIpsum">
+        Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+    </string>
+    
+    <string name="order_amountValidationMessage">
+        Please enter a valid amount!
+    </string>
+    
+    <string name="order_deliveryDateValidationMessage">
+        Please enter a valid date!
+    </string>
+    
+</resources>
