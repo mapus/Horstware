@@ -1,0 +1,23 @@
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+	<html>
+<h:head>
+	<title><ui:insert name="pageTitle" /></title>
+	
+	<link href="static/style.css" rel="stylesheet" type="text/css" />
+</h:head>
+
+<h:body>
+	<ul class="mainMenu">
+		<li><a href="index.jsf">Home</a></li>
+		<li><a href="createOrder.jsf">Create Order</a></li>
+		<li><a href="searchOrders.jsf">Search Orders</a></li>
+	</ul>
+
+	<ui:insert name="pageContent" />
+</h:body>
+	</html>
+</f:view>
