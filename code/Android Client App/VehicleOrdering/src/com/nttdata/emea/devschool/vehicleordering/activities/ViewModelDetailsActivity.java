@@ -36,9 +36,6 @@ public class ViewModelDetailsActivity extends Activity
 		long modelId = getIntent().getExtras().getLong(ExtraKeys.MODEL_ID);
 		model = dataSource.loadVehicleModel(modelId);
 		
-		
-		
-		
 		fillLayoutWithContent();
 	}
 	
