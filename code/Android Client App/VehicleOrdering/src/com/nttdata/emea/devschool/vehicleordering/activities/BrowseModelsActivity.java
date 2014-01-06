@@ -16,20 +16,16 @@ import android.widget.ListView;
 import android.widget.Spinner;
 
 import com.nttdata.emea.devschool.vehicleordering.R;
-import com.nttdata.emea.devschool.vehicleordering.data.DataSource;
-import com.nttdata.emea.devschool.vehicleordering.data.DataSourceFactory;
+import com.nttdata.emea.devschool.vehicleordering.data.DataSourceSingleton;
 import com.nttdata.emea.devschool.vehicleordering.entities.VehicleModel;
 import com.nttdata.emea.devschool.vehicleordering.entities.VehicleType;
 import com.nttdata.emea.devschool.vehicleordering.utility.ExtraKeys;
 
 public class BrowseModelsActivity extends Activity
 {
-	private final static String TYPE_SPINNER_DEFAULT_ENTRY = "choose a vehicle type";
 	private final static int TYPE_SPINNER_DEFAULT_ENTRY_POSITION = 0;
 	private final static int TYPE_SPINNER_DEFAULT_ENTRY_OFFSET = 1;
 	
-	
-	private DataSource dataSource;
 	private List<VehicleType> types;
 	private List<VehicleModel> models;
 	
@@ -42,8 +38,7 @@ public class BrowseModelsActivity extends Activity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_browse_models);
 		
-		dataSource = DataSourceFactory.createDataSource();
-		types = dataSource.loadVehicleTypes();
+		types = DataSourceSingleton.getInstance().retrieveVehicleTypes();
 		models = new ArrayList<VehicleModel>();
 		
 		setupTypeSpinner();
@@ -53,48 +48,39 @@ public class BrowseModelsActivity extends Activity
 	private void setupTypeSpinner ()
 	{
 		Spinner typeSpinner = (Spinner) findViewById(R.id.browseModels_typeSpinner);
-		configureTypeSpinnerAdapter(typeSpinner);
-		configureTypeSpinnerOnItemSelectedListener(typeSpinner);
+		setupTypeSpinnerAdapter(typeSpinner);
+		setupTypeSpinnerOnItemSelectedListener(typeSpinner);
 	}
 	
 	private void setupModelList ()
 	{
 		ListView modelList = (ListView) findViewById(R.id.browseModels_modelListView);
-		configureModelListAdapter(modelList);
-		configureModelListOnItemClickListener(modelList);
+		setupModelListAdapter(modelList);
+		setupModelListOnItemClickListener(modelList);
 	}
 	
-	private void configureTypeSpinnerAdapter (Spinner typeSpinner)
+	private void setupTypeSpinnerAdapter (Spinner typeSpinner)
 	{
 		List<String> entries = new ArrayList<String>();
-		entries.add(TYPE_SPINNER_DEFAULT_ENTRY);
+		String typeSpinnerDefaultEntry = getResources().getString(R.string.browseModels_typeSpinnerDefaultEntry);
+		entries.add(typeSpinnerDefaultEntry);
 		for(VehicleType type : types)
 		{
 			entries.add(type.getName());
 		}
-		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.list_view_item, entries);
+		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.item_browse_models_type_spinner, entries);
 		typeSpinner.setAdapter(adapter);
 	}
 	
-	private void configureTypeSpinnerOnItemSelectedListener (Spinner typeSpinner)
+	private void setupTypeSpinnerOnItemSelectedListener (Spinner typeSpinner)
 	{
 		typeSpinner.setOnItemSelectedListener(new OnItemSelectedListener()
 		{
 			@Override
 			public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
 			{
-				if(position == TYPE_SPINNER_DEFAULT_ENTRY_POSITION)
-				{
-					models.clear();
-				}
-				else
-				{
-					int index = position - TYPE_SPINNER_DEFAULT_ENTRY_OFFSET;
-					VehicleType filterByType = types.get(index);
-					models = dataSource.loadVehicleModels(filterByType);
-				}
-				updateModelListEntries();
-				modelListAdapter.notifyDataSetChanged();
+				updateModels(position);
+				updateModelList();
 			}
 			
 			@Override
@@ -102,15 +88,14 @@ public class BrowseModelsActivity extends Activity
 		});
 	}
 	
-	private void configureModelListAdapter (ListView modelList)
+	private void setupModelListAdapter (ListView modelList)
 	{
 		modelListEntries = new ArrayList<String>();
-		updateModelListEntries();
-		modelListAdapter = new ArrayAdapter<String>(this, R.layout.list_view_item, modelListEntries);
+		modelListAdapter = new ArrayAdapter<String>(this, R.layout.item_browse_models_model_list, modelListEntries);
 		modelList.setAdapter(modelListAdapter);
 	}
 	
-	private void configureModelListOnItemClickListener (ListView modelList)
+	private void setupModelListOnItemClickListener (ListView modelList)
 	{
 		final Context context = this;
 		modelList.setOnItemClickListener(new OnItemClickListener()
@@ -126,12 +111,27 @@ public class BrowseModelsActivity extends Activity
 		});
 	}
 	
-	private void updateModelListEntries ()
+	private void updateModels (int typeSpinnerPosition)
+	{
+		if(typeSpinnerPosition == TYPE_SPINNER_DEFAULT_ENTRY_POSITION)
+		{
+			models.clear();
+		}
+		else
+		{
+			int index = typeSpinnerPosition - TYPE_SPINNER_DEFAULT_ENTRY_OFFSET;
+			VehicleType filterByType = types.get(index);
+			models = DataSourceSingleton.getInstance().retrieveVehicleModels(filterByType);
+		}
+	}
+	
+	private void updateModelList ()
 	{
 		modelListEntries.clear();
 		for(VehicleModel model : models)
 		{
 			modelListEntries.add(model.getName());
 		}
+		modelListAdapter.notifyDataSetChanged();
 	}
 }

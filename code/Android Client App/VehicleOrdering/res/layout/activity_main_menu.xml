@@ -15,6 +15,7 @@
         android:layout_width="fill_parent"
         android:layout_height="@dimen/mainMenu_buttonHeight"
         android:text="@string/mainMenu_browseModels"
+        android:textSize="@dimen/mainMenu_buttonTextSize"
         android:onClick="browseModels"
     />
     
@@ -23,6 +24,7 @@
         android:layout_height="@dimen/mainMenu_buttonHeight"
         android:layout_marginTop="@dimen/mainMenu_buttonSpacing"
         android:text="@string/mainMenu_searchOrders"
+        android:textSize="@dimen/mainMenu_buttonTextSize"
         android:onClick="searchOrders"
     />
     

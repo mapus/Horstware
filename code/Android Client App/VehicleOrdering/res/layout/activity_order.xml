@@ -23,6 +23,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textSize="@dimen/textSizeMedium"
                 android:text="@string/order_modelLabel"
             />
             
@@ -30,6 +31,7 @@
                 android:id="@+id/order_modelName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textSize="@dimen/textSizeMedium"
                 android:text="@string/order_modelNamePlaceholder"
             />
             
@@ -42,15 +44,17 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/order_amountLabel"
+                android:textSize="@dimen/textSizeMedium"
+                android:text="@string/order_quantityLabel"
             />
             
             <EditText
-                android:id="@+id/order_amount"
+                android:id="@+id/order_quantity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:inputType="number"
                 android:ems="10"
+                android:textSize="@dimen/textSizeMedium"
             />
             
         </TableRow>
@@ -62,6 +66,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textSize="@dimen/textSizeMedium"
                 android:text="@string/order_deliveryLabel"
             />
             
@@ -71,6 +76,7 @@
                 android:layout_height="wrap_content"
                 android:inputType="date"
                 android:ems="10"
+                android:textSize="@dimen/textSizeMedium"
             />
             
         </TableRow>
@@ -82,6 +88,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textSize="@dimen/textSizeMedium"
                 android:text="@string/order_firstNameLabel"
             />
             
@@ -91,6 +98,7 @@
                 android:layout_height="wrap_content"
                 android:inputType="textPersonName"
                 android:ems="10"
+                android:textSize="@dimen/textSizeMedium"
             />
             
         </TableRow>
@@ -102,6 +110,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textSize="@dimen/textSizeMedium"
                 android:text="@string/order_lastNameLabel"
             />
             
@@ -111,6 +120,7 @@
                 android:layout_height="wrap_content"
                 android:inputType="textPersonName"
                 android:ems="10"
+                android:textSize="@dimen/textSizeMedium"
             />
             
         </TableRow>
@@ -120,6 +130,7 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textSize="@dimen/textSizeButtons"
         android:text="@string/order_submitLabel"
         android:onClick="submit"
     />

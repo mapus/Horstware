@@ -14,18 +14,15 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.nttdata.emea.devschool.vehicleordering.R;
-import com.nttdata.emea.devschool.vehicleordering.data.DataSource;
-import com.nttdata.emea.devschool.vehicleordering.data.DataSourceFactory;
+import com.nttdata.emea.devschool.vehicleordering.data.DataSourceSingleton;
 import com.nttdata.emea.devschool.vehicleordering.entities.VehicleModel;
 import com.nttdata.emea.devschool.vehicleordering.utility.ExtraKeys;
 
 public class SearchOrdersActivity extends Activity
 {
-	private final static String MODEL_SPINNER_DEFAULT_ENTRY = "no filter";
 	private final static int MODEL_SPINNER_DEFAULT_ENTRY_POSITION = 0;
 	private final static int MODEL_SPINNER_DEFAULT_ENTRY_OFFSET = 1;
 	
-	private DataSource dataSource;
 	private List<VehicleModel> models;
 	private VehicleModel selectedModel;
 	
@@ -35,8 +32,7 @@ public class SearchOrdersActivity extends Activity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_search_orders);
 		
-		dataSource = DataSourceFactory.createDataSource();
-		models = dataSource.loadVehicleModels();
+		models = DataSourceSingleton.getInstance().retrieveVehicleModels();
 		selectedModel = null;
 		
 		setupModelSpinner();
@@ -45,24 +41,25 @@ public class SearchOrdersActivity extends Activity
 	private void setupModelSpinner()
 	{
 		Spinner modelSpinner = (Spinner) findViewById(R.id.searchOrders_modelFilter);
-		configureModelSpinerAdapter(modelSpinner);
-		configureModelSpinerOnItemSelectedListener(modelSpinner);		
+		setupModelSpinnerAdapter(modelSpinner);
+		setupModelSpinerOnItemSelectedListener(modelSpinner);		
 	}
 	
-	private void configureModelSpinerAdapter (Spinner modelSpinner)
+	private void setupModelSpinnerAdapter (Spinner modelSpinner)
 	{
 		List<String> entries = new ArrayList<String>();
-		entries.add(MODEL_SPINNER_DEFAULT_ENTRY);
+		String modelSpinnerDefaultEntry = getResources().getString(R.string.searchOrders_modelSpinnerDefaultEntry);
+		entries.add(modelSpinnerDefaultEntry);
 		for(VehicleModel model : models)
 		{
 			entries.add(model.getName());
 		}
-		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.list_view_item, entries);
+		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.item_search_orders_model_spinner, entries);
 		modelSpinner.setAdapter(adapter);
 	}
 	
 	
-	private void configureModelSpinerOnItemSelectedListener (Spinner modelSpinner)
+	private void setupModelSpinerOnItemSelectedListener (Spinner modelSpinner)
 	{
 		modelSpinner.setOnItemSelectedListener(new OnItemSelectedListener()
 		{
@@ -89,29 +86,41 @@ public class SearchOrdersActivity extends Activity
 	{
 		Intent intent = new Intent(this, DisplaySearchResultsActivity.class);
 		
-		intent.putExtra(ExtraKeys.FIRST_NAME_FILTER, getNameFilter(R.id.searchOrders_firstNameFilter));
-		intent.putExtra(ExtraKeys.LAST_NAME_FILTER, getNameFilter(R.id.searchOrders_lastNameFilter));
-		
-		if(selectedModel != null)
-		{
-			intent.putExtra(ExtraKeys.FILTER_BY_MODEL, true);
-			intent.putExtra(ExtraKeys.MODEL_ID, selectedModel.getId());
-		}
+		addFirstNameFilterExtra(intent);
+		addLastNameFilterExtra(intent);
+		addModelFilterExtra(intent);
 		
 		startActivity(intent);
 	}
 	
-	private String getNameFilter (int textViewId)
+	private void addFirstNameFilterExtra (Intent intent)
 	{
-		TextView firstNameFilterView = (TextView) findViewById(textViewId);
-		String text = firstNameFilterView.getText().toString();
-		if(text.length() != 0)
+		TextView firstNameFilterView = (TextView) findViewById(R.id.searchOrders_firstNameFilter);
+		String firstName = firstNameFilterView.getText().toString();
+		if(firstName.length() != 0)
 		{
-			return text;
+			intent.putExtra(ExtraKeys.FILTER_BY_FIRST_NAME, true);
+			intent.putExtra(ExtraKeys.FIRST_NAME, firstName);
 		}
-		else
+	}
+	
+	private void addLastNameFilterExtra (Intent intent)
+	{
+		TextView firstNameFilterView = (TextView) findViewById(R.id.searchOrders_lastNameFilter);
+		String lastName = firstNameFilterView.getText().toString();
+		if(lastName.length() != 0)
 		{
-			return null;
+			intent.putExtra(ExtraKeys.FILTER_BY_LAST_NAME, true);
+			intent.putExtra(ExtraKeys.LAST_NAME, lastName);
+		}
+	}
+	
+	private void addModelFilterExtra (Intent intent)
+	{
+		if(selectedModel != null)
+		{
+			intent.putExtra(ExtraKeys.FILTER_BY_MODEL, true);
+			intent.putExtra(ExtraKeys.MODEL_ID, selectedModel.getId());
 		}
 	}
 }

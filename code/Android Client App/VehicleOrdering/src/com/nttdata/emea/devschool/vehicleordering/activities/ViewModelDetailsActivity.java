@@ -15,15 +15,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.nttdata.emea.devschool.vehicleordering.R;
-import com.nttdata.emea.devschool.vehicleordering.data.DataSource;
-import com.nttdata.emea.devschool.vehicleordering.data.DataSourceFactory;
+import com.nttdata.emea.devschool.vehicleordering.data.DataSourceSingleton;
 import com.nttdata.emea.devschool.vehicleordering.entities.VehicleModel;
 import com.nttdata.emea.devschool.vehicleordering.utility.Convertor;
 import com.nttdata.emea.devschool.vehicleordering.utility.ExtraKeys;
 
 public class ViewModelDetailsActivity extends Activity
 {
-	private DataSource dataSource;
 	private VehicleModel model;
 	
 	@Override
@@ -32,9 +30,8 @@ public class ViewModelDetailsActivity extends Activity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_view_model_details);
 		
-		dataSource = DataSourceFactory.createDataSource();
 		long modelId = getIntent().getExtras().getLong(ExtraKeys.MODEL_ID);
-		model = dataSource.loadVehicleModel(modelId);
+		model = DataSourceSingleton.getInstance().retrieveVehicleModel(modelId);
 		
 		fillLayoutWithContent();
 	}
@@ -75,16 +72,19 @@ public class ViewModelDetailsActivity extends Activity
 			@Override
 			protected void onPostExecute (Bitmap bitmap)
 			{
+				ViewGroup layout = (ViewGroup) findViewById(R.id.viewModelDetails_layout);
+				View imageLoadingProgressBar = (View) findViewById(R.id.viewModelDetails_imageLoadingProgressBar);
+				layout.removeView(imageLoadingProgressBar);
+				
+				ImageView imageView = (ImageView) findViewById(R.id.viewModelDetails_image);
+				
 				if(bitmap != null)
 				{
-					ImageView imageView = (ImageView) findViewById(R.id.viewModelDetails_image);
 					imageView.setImageBitmap(bitmap);
 				}
 				else
 				{
-					ViewGroup layout = (ViewGroup) findViewById(R.id.viewModelDetails_layout);
-					View image = (View) findViewById(R.id.viewModelDetails_image);
-					layout.removeView(image);
+					layout.removeView(imageView);
 				}
 			}
 		}.execute();

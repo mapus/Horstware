@@ -10,20 +10,20 @@ import com.nttdata.emea.devschool.vehicleordering.entities.VehicleType;
 
 public interface DataSource
 {
-	public Customer loadCustomer (long id);
-	public List<Customer> loadCustomers ();
-	public Customer findCustomer(String firstName, String lastName);
-	public Customer createCustomer(String firstName, String lastName);
+	public VehicleType retrieveVehicleType (long id);
+	public List<VehicleType> retrieveVehicleTypes ();
 	
-	public VehicleModel loadVehicleModel (long id);
-	public List<VehicleModel> loadVehicleModels ();
-	public List<VehicleModel> loadVehicleModels (VehicleType filterByType);
+	public VehicleModel retrieveVehicleModel (long id);
+	public List<VehicleModel> retrieveVehicleModels ();
+	public List<VehicleModel> retrieveVehicleModels (VehicleType filterByType);
 	
-	public VehicleType loadVehicleType (long id);
-	public List<VehicleType> loadVehicleTypes ();
+	public Customer createCustomer (String firstName, String lastName);
+	public Customer retrieveCustomer (long id);
+	public List<Customer> retrieveCustomers ();
+	public List<Customer> findCustomers (String firstName, String lastName);
 	
-	public VehicleOrder loadVehicleOrder (long id);
-	public List<VehicleOrder> loadVehicleOrders ();
-	public List<VehicleOrder> loadVehicleOrders (String filterByCustomersFirstName, String filterByCustomersLastName, VehicleModel filterByModel);
-	public VehicleOrder createVehicleOrder(Customer customer, VehicleModel model, int amount, Date deliveryDate);
+	public VehicleOrder createVehicleOrder (Customer customer, VehicleModel model, int quantity, Date deliveryDate);
+	public VehicleOrder retrieveVehicleOrder (long id);
+	public List<VehicleOrder> retrieveVehicleOrders ();
+	public List<VehicleOrder> retrieveVehicleOrders (String filterByCustomersFirstName, String filterByCustomersLastName, VehicleModel filterByModel);
 }

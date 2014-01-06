@@ -4,6 +4,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -13,21 +14,17 @@ import android.widget.TextView;
 
 import com.nttdata.emea.devschool.vehicleordering.R;
 import com.nttdata.emea.devschool.vehicleordering.data.DataSource;
-import com.nttdata.emea.devschool.vehicleordering.data.DataSourceFactory;
+import com.nttdata.emea.devschool.vehicleordering.data.DataSourceSingleton;
 import com.nttdata.emea.devschool.vehicleordering.entities.Customer;
 import com.nttdata.emea.devschool.vehicleordering.entities.VehicleModel;
 import com.nttdata.emea.devschool.vehicleordering.entities.VehicleOrder;
 import com.nttdata.emea.devschool.vehicleordering.utility.ExtraKeys;
+import com.nttdata.emea.devschool.vehicleordering.utility.InvalidDeliveryDateException;
+import com.nttdata.emea.devschool.vehicleordering.utility.InvalidQuantityException;
 
 public class OrderActivity extends Activity
 {
-	private DataSource dataSource;
 	private VehicleModel model;
-	
-	private TextView tvAmount;
-	private TextView tvDeliveryDate;
-	private TextView tvCustomerFirstName;
-	private TextView tvCustomerLastName;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -35,14 +32,8 @@ public class OrderActivity extends Activity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_order);
 		
-		dataSource = DataSourceFactory.createDataSource();
 		long modelId = getIntent().getExtras().getLong(ExtraKeys.MODEL_ID);
-		model = dataSource.loadVehicleModel(modelId);
-		
-		tvAmount = (TextView) findViewById(R.id.order_amount);
-		tvDeliveryDate = (TextView) findViewById(R.id.order_deliveryDate);
-		tvCustomerFirstName = (TextView) findViewById(R.id.order_customerFirstName);
-		tvCustomerLastName = (TextView) findViewById(R.id.order_customerLastName);
+		model = DataSourceSingleton.getInstance().retrieveVehicleModel(modelId);
 		
 		setModelName();
 	}
@@ -55,47 +46,46 @@ public class OrderActivity extends Activity
 	
 	public void submit (View view)
 	{
-		if(validate() == true)
+		try
 		{
 			VehicleOrder order = createOrder();
 			startViewOrderDetailsActivity(order);
 		}
+		catch (InvalidQuantityException e)
+		{
+			String msg = getResources().getString(R.string.order_quantityValidationMessage);
+			TextView tv = (TextView) findViewById(R.id.order_quantity);
+			tv.setError(msg);
+		}
+		catch (InvalidDeliveryDateException e)
+		{
+			String msg = getResources().getString(R.string.order_deliveryDateValidationMessage);
+			TextView tv = (TextView) findViewById(R.id.order_deliveryDate);
+			tv.setError(msg);
+		}
 	}
 	
-	private boolean validate ()
+	private VehicleOrder createOrder () throws InvalidQuantityException, InvalidDeliveryDateException
 	{
-		boolean valid = true;
-		
-		if(!amountValid())
-		{
-			String validationMessage = getResources().getString(R.string.order_amountValidationMessage);
-			tvAmount.setError(validationMessage);
-			valid = false;
-		}
-		
-		if(!deliveryDateValid())
-		{
-			String validationMessage = getResources().getString(R.string.order_deliveryDateValidationMessage);
-			tvDeliveryDate.setError(validationMessage);
-			valid = false;
-		}
-		
-		return valid;
-	}
-	
-	private VehicleOrder createOrder ()
-	{
-		String firstName = getFirstName();
-		String lastName = getLastName();
-		int amount = getAmount();
+		String firstName = getCustomerFirstName();
+		String lastName = getCustomerLastName();
+		int quantity = getQuantity();
 		Date deliveryDate = getDeliveryDate();
 		
-		Customer customer = dataSource.findCustomer(firstName, lastName);
-		if(customer == null)
+		DataSource dataSource = DataSourceSingleton.getInstance();
+		
+		Customer customer;
+		List<Customer> foundCustomers = dataSource.findCustomers(firstName, lastName);
+		if(foundCustomers.size() != 0)
+		{
+			customer = foundCustomers.get(0);
+		}
+		else
 		{
 			customer = dataSource.createCustomer(firstName, lastName);
 		}
-		VehicleOrder order = dataSource.createVehicleOrder(customer, model, amount, deliveryDate);
+		
+		VehicleOrder order = dataSource.createVehicleOrder(customer, model, quantity, deliveryDate);
 		
 		return order;
 	}
@@ -108,60 +98,43 @@ public class OrderActivity extends Activity
 		startActivity(intent);
 	}
 	
-	private boolean amountValid ()
+	private String getCustomerFirstName ()
 	{
-		String amountString = tvAmount.getText().toString();
+		TextView tv = (TextView) findViewById(R.id.order_customerFirstName);
+		return tv.getText().toString();
+	}
+	
+	private String getCustomerLastName ()
+	{
+		TextView tv = (TextView) findViewById(R.id.order_customerLastName);
+		return tv.getText().toString();
+	}
+	
+	private int getQuantity () throws InvalidQuantityException
+	{
 		try
 		{
-			Integer.valueOf(amountString);
+			TextView tv = (TextView) findViewById(R.id.order_quantity);
+			String s = tv.getText().toString();
+			return Integer.parseInt(s);
 		}
 		catch(NumberFormatException e)
 		{
-			return false;
+			throw new InvalidQuantityException();
 		}
-		return true;
 	}
 	
-	private boolean deliveryDateValid ()
+	private Date getDeliveryDate () throws InvalidDeliveryDateException
 	{
-		String dateString = tvDeliveryDate.getText().toString();
 		try
 		{
-			SimpleDateFormat.getDateInstance(DateFormat.SHORT).parse(dateString);
+			TextView tv = (TextView) findViewById(R.id.order_deliveryDate);
+			String s = tv.getText().toString();
+			return SimpleDateFormat.getDateInstance(DateFormat.SHORT).parse(s);
 		}
 		catch(ParseException e)
 		{
-			return false;
-		}
-		return true;
-	}
-	
-	private String getFirstName ()
-	{
-		return tvCustomerFirstName.getText().toString();
-	}
-	
-	private String getLastName ()
-	{
-		return tvCustomerLastName.getText().toString();
-	}
-	
-	private int getAmount ()
-	{
-		String amountString = tvAmount.getText().toString();
-		return Integer.parseInt(amountString);
-	}
-	
-	private Date getDeliveryDate ()
-	{
-		String dateString = tvDeliveryDate.getText().toString();
-		try
-		{
-			return SimpleDateFormat.getDateInstance(DateFormat.SHORT).parse(dateString);
-		}
-		catch (ParseException e)
-		{
-			throw new RuntimeException(e);
+			throw new InvalidDeliveryDateException();
 		}
 	}
 }

@@ -14,8 +14,8 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textSize="@dimen/textSizeLarge"
         android:text="@string/searchOrders_filtersTitle"
-        android:textAppearance="?android:attr/textAppearanceMedium"
     />
     
     <TableLayout
@@ -30,6 +30,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textSize="@dimen/textSizeMedium"
                 android:text="@string/searchOrders_firstNameLabel"
             />
             
@@ -37,6 +38,7 @@
                 android:id="@+id/searchOrders_firstNameFilter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textSize="@dimen/textSizeMedium"
                 android:hint="@string/searchOrders_filterHint"
                 android:ems="10"
             />
@@ -51,6 +53,7 @@
                 android:id="@+id/textView3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textSize="@dimen/textSizeMedium"
                 android:text="@string/searchOrders_lastNameLabel"
             />
             
@@ -58,6 +61,7 @@
                 android:id="@+id/searchOrders_lastNameFilter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textSize="@dimen/textSizeMedium"
                 android:hint="@string/searchOrders_filterHint"
                 android:ems="10"
             />
@@ -71,6 +75,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textSize="@dimen/textSizeMedium"
                 android:text="@string/searchOrders_modelLabel"
             />
             
@@ -86,8 +91,9 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textSize="@dimen/textSizeButtons"
         android:text="@string/searchOrders_startLabel"
-        android:onClick = "start"
+        android:onClick="start"
     />
     
 </LinearLayout>

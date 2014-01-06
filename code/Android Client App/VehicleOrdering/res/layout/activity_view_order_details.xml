@@ -15,8 +15,8 @@
         android:id="@+id/viewOrderDetails_orderLabel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textSize="@dimen/textSizeLarge"
         android:text="@string/viewOrderDetails_orderLabel"
-        android:textAppearance="?android:attr/textAppearanceLarge"
     />
     
     <TableLayout
@@ -31,7 +31,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textSize="@dimen/textSizeMedium"
                 android:text="@string/viewOrderDetails_modelNameLabel"
             />
             
@@ -39,7 +39,7 @@
                 android:id="@+id/viewOrderDetails_modelName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textSize="@dimen/textSizeMedium"
                 android:text="@string/viewOrderDetails_modelNamePlaceholder"
             />
             
@@ -52,7 +52,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textSize="@dimen/textSizeMedium"
                 android:text="@string/viewOrderDetails_customerNameLabel"
             />
             
@@ -60,7 +60,7 @@
                 android:id="@+id/viewOrderDetails_customerName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textSize="@dimen/textSizeMedium"
                 android:text="@string/viewOrderDetails_customerNamePlaceholder"
             />
             
@@ -73,16 +73,16 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="@string/viewOrderDetails_amountLabel"
+                android:textSize="@dimen/textSizeMedium"
+                android:text="@string/viewOrderDetails_quantityLabel"
             />
             
             <TextView
-                android:id="@+id/viewOrderDetails_amount"
+                android:id="@+id/viewOrderDetails_quantity"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="@string/viewOrderDetails_amountPlaceholder"
+                android:textSize="@dimen/textSizeMedium"
+                android:text="@string/viewOrderDetails_quantityPlaceholder"
             />
             
         </TableRow>
@@ -94,7 +94,28 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textSize="@dimen/textSizeMedium"
+                android:text="@string/viewOrderDetails_invoiceTotalLabel"
+            />
+            
+            <TextView
+                android:id="@+id/viewOrderDetails_invoiceTotal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/textSizeMedium"
+                android:text="@string/viewOrderDetails_invoiceTotalPlaceholder"
+            />
+            
+        </TableRow>
+        
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+            
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/textSizeMedium"
                 android:text="@string/viewOrderDetails_deliveryDateLabel"
             />
             
@@ -102,7 +123,7 @@
                 android:id="@+id/viewOrderDetails_deliveryDate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textSize="@dimen/textSizeMedium"
                 android:text="@string/viewOrderDetails_deliveryDatePlaceholder"
             />
             

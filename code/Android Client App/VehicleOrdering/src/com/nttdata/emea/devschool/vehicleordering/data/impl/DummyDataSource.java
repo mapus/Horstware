@@ -44,10 +44,12 @@ public class DummyDataSource implements DataSource
 		vehicleTypes.put(type1.getId(), type1);
 		vehicleTypes.put(type2.getId(), type2);
 		
-		VehicleModel model1 = new VehicleModel(1, "Todestretter Treitausend", type1, "Holy Cow, das Ding geht ab!", "http://www.bikeonlineshop.de/images/pukydreiradlillifee.jpg", 10000);
-		VehicleModel model2 = new VehicleModel(2, "Tripletastic", type1, "Da legts di nieder!", "http://www.kokua-shop.com/WebRoot/Store7/Shops/62501574/511A/120B/8AA8/526D/41C6/C0A8/28BB/A79B/LIKEaBIKE_midi_Dreirad_klein.jpg", 9999);
-		VehicleModel model3 = new VehicleModel(3, "Gammelkanu", type2, "Meh, nicht so knorke.", "http://demos.appthemes.com/classipress/files/2012/06/656479.jpg", 10000000);
-		VehicleModel model4 = new VehicleModel(4, "BremserBoye", type2, "Da schwimmt man schneller.", "http://tzach.edublogs.org/files/2011/01/speedBoat-szx5d2.jpg", 8000000);
+		String loremIpsum = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.";
+		
+		VehicleModel model1 = new VehicleModel(1, "Todestretter Treitausend", type1, "Holy Cow, das Ding geht ab! " + loremIpsum, "http://www.bikeonlineshop.de/images/pukydreiradlillifee.jpg", 10000);
+		VehicleModel model2 = new VehicleModel(2, "Tripletastic", type1, "Da legts di nieder! " + loremIpsum, "http://www.kokua-shop.com/WebRoot/Store7/Shops/62501574/511A/120B/8AA8/526D/41C6/C0A8/28BB/A79B/LIKEaBIKE_midi_Dreirad_klein.jpg", 9999);
+		VehicleModel model3 = new VehicleModel(3, "Gammelkanu", type2, "Meh, nicht so knorke. " + loremIpsum, "http://demos.appthemes.com/classipress/files/2012/06/656479.jpg", 10000000);
+		VehicleModel model4 = new VehicleModel(4, "BremserBoye", type2, "Da schwimmt man schneller. " + loremIpsum, "http://tzach.edublogs.org/files/2011/01/speedBoat-szx5d2.jpg", 8000000);
 		vehicleModels.put(model1.getId(), model1);
 		vehicleModels.put(model2.getId(), model2);
 		vehicleModels.put(model3.getId(), model3);
@@ -76,28 +78,29 @@ public class DummyDataSource implements DataSource
 	}
 	
 	@Override
-	public Customer loadCustomer (long id)
+	public Customer retrieveCustomer (long id)
 	{
 		return customers.get(id);
 	}
 	
 	@Override
-	public List<Customer> loadCustomers ()
+	public List<Customer> retrieveCustomers ()
 	{
 		return new ArrayList<Customer>(customers.values());
 	}
 
 	@Override
-	public Customer findCustomer(String firstName, String lastName)
+	public List<Customer> findCustomers(String firstName, String lastName)
 	{
+		List<Customer> foundCustomers = new ArrayList<Customer>();
 		for(Customer c : customers.values())
 		{
 			if((c.getFirstName().equals(firstName)) && (c.getLastName().equals(lastName)))
 			{
-				return c;
+				foundCustomers.add(c);
 			}
 		}
-		return null;
+		return foundCustomers;
 	}
 
 	@Override
@@ -109,19 +112,19 @@ public class DummyDataSource implements DataSource
 	}
 	
 	@Override
-	public VehicleModel loadVehicleModel (long id)
+	public VehicleModel retrieveVehicleModel (long id)
 	{
 		return vehicleModels.get(id);
 	}
 	
 	@Override
-	public List<VehicleModel> loadVehicleModels ()
+	public List<VehicleModel> retrieveVehicleModels ()
 	{
 		return new ArrayList<VehicleModel>(vehicleModels.values());
 	}
 	
 	@Override
-	public List<VehicleModel> loadVehicleModels (VehicleType filterByType)
+	public List<VehicleModel> retrieveVehicleModels (VehicleType filterByType)
 	{
 		List<VehicleModel> results = new ArrayList<VehicleModel>();
 		for(VehicleModel vm : vehicleModels.values())
@@ -135,31 +138,31 @@ public class DummyDataSource implements DataSource
 	}
 	
 	@Override
-	public VehicleType loadVehicleType (long id)
+	public VehicleType retrieveVehicleType (long id)
 	{
 		return vehicleTypes.get(id);
 	}
 	
 	@Override
-	public List<VehicleType> loadVehicleTypes ()
+	public List<VehicleType> retrieveVehicleTypes ()
 	{
 		return new ArrayList<VehicleType>(vehicleTypes.values());
 	}
 	
 	@Override
-	public VehicleOrder loadVehicleOrder (long id)
+	public VehicleOrder retrieveVehicleOrder (long id)
 	{
 		return vehicleOrders.get(id);
 	}
 	
 	@Override
-	public List<VehicleOrder> loadVehicleOrders ()
+	public List<VehicleOrder> retrieveVehicleOrders ()
 	{
 		return new ArrayList<VehicleOrder>(vehicleOrders.values());
 	}
 	
 	@Override
-	public List<VehicleOrder> loadVehicleOrders(String filterByCustomersFirstName, String filterByCustomersLastName, VehicleModel filterByModel)
+	public List<VehicleOrder> retrieveVehicleOrders(String filterByCustomersFirstName, String filterByCustomersLastName, VehicleModel filterByModel)
 	{
 		List<VehicleOrder> results = new ArrayList<VehicleOrder>(vehicleOrders.values());
 		if(filterByCustomersFirstName != null)
@@ -178,9 +181,9 @@ public class DummyDataSource implements DataSource
 	}
 	
 	@Override
-	public VehicleOrder createVehicleOrder(Customer customer, VehicleModel model, int amount, Date deliveryDate)
+	public VehicleOrder createVehicleOrder(Customer customer, VehicleModel model, int quantity, Date deliveryDate)
 	{
-		VehicleOrder newOrder = new VehicleOrder(++vehicleOrderIdCounter, customer, model, amount, deliveryDate);
+		VehicleOrder newOrder = new VehicleOrder(++vehicleOrderIdCounter, customer, model, quantity, deliveryDate);
 		vehicleOrders.put(newOrder.getId(), newOrder);
 		return newOrder;
 	}

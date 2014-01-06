@@ -6,5 +6,10 @@
     
     <dimen name="mainMenu_buttonHeight">100dp</dimen>
     <dimen name="mainMenu_buttonSpacing">10dp</dimen>
+    <dimen name="mainMenu_buttonTextSize">24sp</dimen>
+    
+    <dimen name="textSizeMedium">18sp</dimen>
+    <dimen name="textSizeLarge">24sp</dimen>
+    <dimen name="textSizeButtons">18sp</dimen>
     
 </resources>

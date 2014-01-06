@@ -6,15 +6,15 @@ public class VehicleOrder extends AbstractEntity
 {
 	private Customer customer;
 	private VehicleModel model;
-	private int amount;
+	private int quantity;
 	private Date deliveryDate;
 	
-	public VehicleOrder (long id, Customer customer, VehicleModel model, int amount, Date deliveryDate)
+	public VehicleOrder (long id, Customer customer, VehicleModel model, int quantity, Date deliveryDate)
 	{
 		super(id);
 		this.customer = customer;
 		this.model = model;
-		this.amount = amount;
+		this.quantity = quantity;
 		this.deliveryDate = deliveryDate;
 	}
 	
@@ -30,11 +30,11 @@ public class VehicleOrder extends AbstractEntity
 	public void setModel(VehicleModel model) {
 		this.model = model;
 	}
-	public int getAmount() {
-		return amount;
+	public int getQuantity() {
+		return quantity;
 	}
-	public void setAmount(int amount) {
-		this.amount = amount;
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
 	}
 	public Date getDeliveryDate() {
 		return deliveryDate;
@@ -42,12 +42,17 @@ public class VehicleOrder extends AbstractEntity
 	public void setDeliveryDate(Date deliveryDate) {
 		this.deliveryDate = deliveryDate;
 	}
+	
+	public long getInvoiceTotal ()
+	{
+		return quantity * model.getPriceInEuroCent();
+	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = prime * result + amount;
+		result = prime * result + quantity;
 		result = prime * result
 				+ ((customer == null) ? 0 : customer.hashCode());
 		result = prime * result
@@ -65,7 +70,7 @@ public class VehicleOrder extends AbstractEntity
 		if (getClass() != obj.getClass())
 			return false;
 		VehicleOrder other = (VehicleOrder) obj;
-		if (amount != other.amount)
+		if (quantity != other.quantity)
 			return false;
 		if (customer == null) {
 			if (other.customer != null)
@@ -88,6 +93,8 @@ public class VehicleOrder extends AbstractEntity
 	@Override
 	public String toString ()
 	{
-		return super.toString() + ": " + amount + " [" + model.toString() + "] for [" + customer.toString() + "]" ;
+		return "Order " + String.valueOf(getId()) + ":\n" +
+			String.valueOf(quantity) + "x " + model.getName() + "\n" +
+			customer.getFirstName() + " " + customer.getLastName();
 	}
 }

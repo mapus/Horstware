@@ -14,15 +14,13 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.nttdata.emea.devschool.vehicleordering.R;
-import com.nttdata.emea.devschool.vehicleordering.data.DataSource;
-import com.nttdata.emea.devschool.vehicleordering.data.DataSourceFactory;
+import com.nttdata.emea.devschool.vehicleordering.data.DataSourceSingleton;
 import com.nttdata.emea.devschool.vehicleordering.entities.VehicleModel;
 import com.nttdata.emea.devschool.vehicleordering.entities.VehicleOrder;
 import com.nttdata.emea.devschool.vehicleordering.utility.ExtraKeys;
 
 public class DisplaySearchResultsActivity extends Activity
 {
-	private DataSource dataSource;
 	private List<VehicleOrder> orders;
 	
 	@Override
@@ -31,7 +29,6 @@ public class DisplaySearchResultsActivity extends Activity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_display_search_results);
 		
-		dataSource = DataSourceFactory.createDataSource();
 		orders = searchOrders();
 		
 		setupOrderList();
@@ -41,40 +38,78 @@ public class DisplaySearchResultsActivity extends Activity
 	{
 		Bundle extras = getIntent().getExtras();
 		
-		String firstNameFilter = extras.getString(ExtraKeys.FIRST_NAME_FILTER);
-		String lastNameFilter = extras.getString(ExtraKeys.LAST_NAME_FILTER);
-		
-		VehicleModel modelFilter = null;
+		if(extras == null)
+		{
+			return DataSourceSingleton.getInstance().retrieveVehicleOrders();
+		}
+		else
+		{
+			String firstNameFilter = getFirstNameFilter(extras);
+			String lastNameFilter = getLastNameFilter(extras);
+			VehicleModel modelFilter = getModelFilter(extras);
+			return DataSourceSingleton.getInstance().retrieveVehicleOrders(firstNameFilter, lastNameFilter, modelFilter);
+		}
+	}
+	
+	private String getFirstNameFilter (Bundle extras)
+	{
+		boolean filterByFirstName = extras.getBoolean(ExtraKeys.FILTER_BY_FIRST_NAME);
+		if(filterByFirstName)
+		{
+			return extras.getString(ExtraKeys.FIRST_NAME);
+		}
+		else 
+		{
+			return null;
+		}
+	}
+	
+	private String getLastNameFilter (Bundle extras)
+	{
+		boolean filterByLastName = extras.getBoolean(ExtraKeys.FILTER_BY_LAST_NAME);
+		if(filterByLastName)
+		{
+			return extras.getString(ExtraKeys.LAST_NAME);
+		}
+		else 
+		{
+			return null;
+		}
+	}
+	
+	private VehicleModel getModelFilter (Bundle extras)
+	{
 		boolean filterByModel = extras.getBoolean(ExtraKeys.FILTER_BY_MODEL);
 		if(filterByModel)
 		{
 			long modelId = extras.getLong(ExtraKeys.MODEL_ID);
-			modelFilter = dataSource.loadVehicleModel(modelId);
+			return DataSourceSingleton.getInstance().retrieveVehicleModel(modelId);
 		}
-		
-		List<VehicleOrder> result = dataSource.loadVehicleOrders(firstNameFilter, lastNameFilter, modelFilter);
-		return result;
+		else 
+		{
+			return null;
+		}
 	}
 	
 	private void setupOrderList ()
 	{
 		ListView orderListView = (ListView) findViewById(R.id.displaySearchResults_ordersList);
-		configureOrderListAdapter(orderListView);
-		configureOrderListOnItemClickListener(orderListView);
+		setupOrderListAdapter(orderListView);
+		setupOrderListOnItemClickListener(orderListView);
 	}
 	
-	private void configureOrderListAdapter (ListView orderListView)
+	private void setupOrderListAdapter (ListView orderListView)
 	{
 		List<String> entries = new ArrayList<String>();
 		for(VehicleOrder order : orders)
 		{
 			entries.add(order.toString());
 		}
-		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.list_view_item, entries);
+		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.item_display_search_results_result_list, entries);
 		orderListView.setAdapter(adapter);
 	}
 	
-	private void configureOrderListOnItemClickListener (ListView orderListView)
+	private void setupOrderListOnItemClickListener (ListView orderListView)
 	{
 		final Context context = this;
 		orderListView.setOnItemClickListener(new OnItemClickListener()

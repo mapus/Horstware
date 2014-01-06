@@ -16,15 +16,23 @@
         android:id="@+id/viewModelDetails_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textSize="@dimen/textSizeLarge"
         android:text="@string/viewModelDetails_namePlaceholder"
-        android:textAppearance="?android:attr/textAppearanceLarge"
+    />
+    
+    <ProgressBar
+        android:id="@+id/viewModelDetails_imageLoadingProgressBar"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        android:layout_gravity="center_horizontal"
     />
     
     <ImageView
         android:id="@+id/viewModelDetails_image"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_launcher"
         android:background="@android:color/background_light"
         android:contentDescription="@string/viewModelDetails_imageDescription"
     />
@@ -33,6 +41,7 @@
         android:id="@+id/viewModelDetails_description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textSize="@dimen/textSizeMedium"
         android:text="@string/loremIpsum" />
     
     <LinearLayout
@@ -45,13 +54,14 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:textSize="@dimen/textSizeLarge"
             android:text="@string/viewModelDetails_pricePlaceholder"
-            android:textAppearance="?android:attr/textAppearanceLarge"
         />
         
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="@dimen/textSizeButtons"
             android:text="@string/viewModelDetails_orderLabel"
             android:onClick="order"
         />
