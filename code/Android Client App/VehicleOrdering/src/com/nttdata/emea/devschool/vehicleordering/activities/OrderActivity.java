@@ -18,9 +18,10 @@ import com.nttdata.emea.devschool.vehicleordering.data.DataSourceSingleton;
 import com.nttdata.emea.devschool.vehicleordering.entities.Customer;
 import com.nttdata.emea.devschool.vehicleordering.entities.VehicleModel;
 import com.nttdata.emea.devschool.vehicleordering.entities.VehicleOrder;
+import com.nttdata.emea.devschool.vehicleordering.exceptions.InvalidDeliveryDateException;
+import com.nttdata.emea.devschool.vehicleordering.exceptions.InvalidNameException;
+import com.nttdata.emea.devschool.vehicleordering.exceptions.InvalidQuantityException;
 import com.nttdata.emea.devschool.vehicleordering.utility.ExtraKeys;
-import com.nttdata.emea.devschool.vehicleordering.utility.InvalidDeliveryDateException;
-import com.nttdata.emea.devschool.vehicleordering.utility.InvalidQuantityException;
 
 public class OrderActivity extends Activity
 {
@@ -46,31 +47,84 @@ public class OrderActivity extends Activity
 	
 	public void submit (View view)
 	{
-		try
+		if(valid())
 		{
 			VehicleOrder order = createOrder();
 			startViewOrderDetailsActivity(order);
 		}
-		catch (InvalidQuantityException e)
-		{
-			String msg = getResources().getString(R.string.order_quantityValidationMessage);
-			TextView tv = (TextView) findViewById(R.id.order_quantity);
-			tv.setError(msg);
-		}
-		catch (InvalidDeliveryDateException e)
-		{
-			String msg = getResources().getString(R.string.order_deliveryDateValidationMessage);
-			TextView tv = (TextView) findViewById(R.id.order_deliveryDate);
-			tv.setError(msg);
-		}
 	}
 	
-	private VehicleOrder createOrder () throws InvalidQuantityException, InvalidDeliveryDateException
+	private boolean valid ()
 	{
-		String firstName = getCustomerFirstName();
-		String lastName = getCustomerLastName();
-		int quantity = getQuantity();
-		Date deliveryDate = getDeliveryDate();
+		boolean result = true;
+		
+		try
+		{
+			getQuantity();
+		}
+		catch(InvalidQuantityException e)
+		{
+			showValidationMessage(R.id.order_quantity, R.string.order_quantityValidationMessage);
+			result = false;
+		}
+		
+		try
+		{
+			getDeliveryDate();
+		}
+		catch(InvalidDeliveryDateException e)
+		{
+			showValidationMessage(R.id.order_deliveryDate, R.string.order_deliveryDateValidationMessage);
+			result = false;
+		}
+		
+		try
+		{
+			getCustomerFirstName();
+		}
+		catch(InvalidNameException e)
+		{
+			showValidationMessage(R.id.order_customerFirstName, R.string.order_nameValidationMessage);
+			result = false;
+		}
+		
+		try
+		{
+			getCustomerLastName();
+		}
+		catch(InvalidNameException e)
+		{
+			showValidationMessage(R.id.order_customerLastName, R.string.order_nameValidationMessage);
+			result = false;
+		}
+		
+		return result;
+	}
+	
+	private void showValidationMessage (int viewId, int msgId)
+	{
+		TextView tv = (TextView) findViewById(viewId);
+		String msg = getResources().getString(msgId);
+		tv.setError(msg);
+	}
+	
+	private VehicleOrder createOrder ()
+	{
+		String firstName, lastName;
+		int quantity;
+		Date deliveryDate;
+		
+		try
+		{
+			firstName = getCustomerFirstName();
+			lastName = getCustomerLastName();
+			quantity = getQuantity();
+			deliveryDate = getDeliveryDate();
+		}
+		catch(Exception e)
+		{
+			throw new RuntimeException(e);
+		}
 		
 		DataSource dataSource = DataSourceSingleton.getInstance();
 		
@@ -98,16 +152,32 @@ public class OrderActivity extends Activity
 		startActivity(intent);
 	}
 	
-	private String getCustomerFirstName ()
+	private String getCustomerFirstName () throws InvalidNameException
 	{
 		TextView tv = (TextView) findViewById(R.id.order_customerFirstName);
-		return tv.getText().toString();
+		String firstName = tv.getText().toString();
+		if(firstName.length() != 0)
+		{
+			return firstName;
+		}
+		else
+		{
+			throw new InvalidNameException();
+		}
 	}
 	
-	private String getCustomerLastName ()
+	private String getCustomerLastName () throws InvalidNameException
 	{
 		TextView tv = (TextView) findViewById(R.id.order_customerLastName);
-		return tv.getText().toString();
+		String lastName = tv.getText().toString();
+		if(lastName.length() != 0)
+		{
+			return lastName;
+		}
+		else
+		{
+			throw new InvalidNameException();
+		}
 	}
 	
 	private int getQuantity () throws InvalidQuantityException

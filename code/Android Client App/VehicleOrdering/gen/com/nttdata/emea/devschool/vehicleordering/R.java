@@ -19,6 +19,7 @@ public final class R {
          */
         public static final int activity_horizontal_margin=0x7f040000;
         public static final int activity_vertical_margin=0x7f040001;
+        public static final int itemHorizontalPadding=0x7f040008;
         public static final int mainMenu_buttonHeight=0x7f040002;
         public static final int mainMenu_buttonSpacing=0x7f040003;
         public static final int mainMenu_buttonTextSize=0x7f040004;
@@ -80,6 +81,7 @@ public final class R {
         public static final int order_lastNameLabel=0x7f050014;
         public static final int order_modelLabel=0x7f05000f;
         public static final int order_modelNamePlaceholder=0x7f050010;
+        public static final int order_nameValidationMessage=0x7f05002b;
         public static final int order_quantityLabel=0x7f050011;
         public static final int order_quantityValidationMessage=0x7f050029;
         public static final int order_submitLabel=0x7f050015;
@@ -89,6 +91,7 @@ public final class R {
         public static final int searchOrders_lastNameLabel=0x7f050018;
         public static final int searchOrders_modelLabel=0x7f05001a;
         public static final int searchOrders_modelSpinnerDefaultEntry=0x7f05001b;
+        public static final int searchOrders_searchWithoutResults=0x7f05002c;
         public static final int searchOrders_startLabel=0x7f05001c;
         public static final int title_activity_browse_models=0x7f050001;
         public static final int title_activity_display_search_results=0x7f050002;

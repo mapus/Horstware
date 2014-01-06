@@ -62,4 +62,12 @@
         Please enter a valid date!
     </string>
     
+    <string name="order_nameValidationMessage">
+        Please enter a valid name!
+    </string>
+    
+    <string name="searchOrders_searchWithoutResults">
+        No search results.
+    </string>
+    
 </resources>

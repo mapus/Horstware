@@ -1,5 +1,0 @@
-- parallele Validation bei OrderActivity
-- checken ob Placeholder notwendig
-- Items einrücken
-- bessere Delivery-Date Validierung bei OrderActivity
-- max Quantity pro Session?

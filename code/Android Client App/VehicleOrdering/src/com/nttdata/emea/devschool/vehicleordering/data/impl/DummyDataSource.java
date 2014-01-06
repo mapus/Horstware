@@ -46,10 +46,10 @@ public class DummyDataSource implements DataSource
 		
 		String loremIpsum = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.";
 		
-		VehicleModel model1 = new VehicleModel(1, "Todestretter Treitausend", type1, "Holy Cow, das Ding geht ab! " + loremIpsum, "http://www.bikeonlineshop.de/images/pukydreiradlillifee.jpg", 10000);
+		VehicleModel model1 = new VehicleModel(1, "Todestreter Treitausend", type1, "Holy Cow, das Ding geht ab! " + loremIpsum, "http://www.bikeonlineshop.de/images/pukydreiradlillifee.jpg", 10000);
 		VehicleModel model2 = new VehicleModel(2, "Tripletastic", type1, "Da legts di nieder! " + loremIpsum, "http://www.kokua-shop.com/WebRoot/Store7/Shops/62501574/511A/120B/8AA8/526D/41C6/C0A8/28BB/A79B/LIKEaBIKE_midi_Dreirad_klein.jpg", 9999);
 		VehicleModel model3 = new VehicleModel(3, "Gammelkanu", type2, "Meh, nicht so knorke. " + loremIpsum, "http://demos.appthemes.com/classipress/files/2012/06/656479.jpg", 10000000);
-		VehicleModel model4 = new VehicleModel(4, "BremserBoye", type2, "Da schwimmt man schneller. " + loremIpsum, "http://tzach.edublogs.org/files/2011/01/speedBoat-szx5d2.jpg", 8000000);
+		VehicleModel model4 = new VehicleModel(4, "Bremser-Boye", type2, "Da schwimmt man schneller. " + loremIpsum, "http://tzach.edublogs.org/files/2011/01/speedBoat-szx5d2.jpg", 8000000);
 		vehicleModels.put(model1.getId(), model1);
 		vehicleModels.put(model2.getId(), model2);
 		vehicleModels.put(model3.getId(), model3);

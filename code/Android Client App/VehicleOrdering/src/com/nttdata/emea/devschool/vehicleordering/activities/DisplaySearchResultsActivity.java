@@ -101,9 +101,17 @@ public class DisplaySearchResultsActivity extends Activity
 	private void setupOrderListAdapter (ListView orderListView)
 	{
 		List<String> entries = new ArrayList<String>();
-		for(VehicleOrder order : orders)
+		if(orders.size() > 0)
 		{
-			entries.add(order.toString());
+			for(VehicleOrder order : orders)
+			{
+				entries.add(order.toString());
+			}
+		}
+		else
+		{
+			String noSearchResults = getResources().getString(R.string.searchOrders_searchWithoutResults);
+			entries.add(noSearchResults);
 		}
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.item_display_search_results_result_list, entries);
 		orderListView.setAdapter(adapter);
