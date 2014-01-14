@@ -1,12 +1,13 @@
 package com.nttdata.emea.devschool.vehicleordering.entities;
 
-public class VehicleType extends AbstractEntity
+public class VehicleType
 {
 	private String name;
+	private long id;
 	
 	public VehicleType (long id, String name)
 	{
-		super(id);
+		this.id=id;
 		this.name = name;
 	}
 	public VehicleType()
@@ -15,8 +16,11 @@ public class VehicleType extends AbstractEntity
 	}
 	public void setId(long id)
 	{
-		super.setId(id);
+		this.id=id;
 	}
+	public long getId () {
+		return id;
+	}	
 	
 	public String getName() {
 		return name;

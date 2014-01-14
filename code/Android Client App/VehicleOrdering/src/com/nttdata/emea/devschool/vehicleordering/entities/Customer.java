@@ -1,17 +1,34 @@
 package com.nttdata.emea.devschool.vehicleordering.entities;
 
-public class Customer extends AbstractEntity
+import org.simpleframework.xml.Element;
+
+public class Customer
 {
+	@Element
 	private String firstName;
+	@Element
 	private String lastName;
+	@Element
+	private long id;
 	
 	public Customer (long id, String firstName, String lastName)
 	{
-		super(id);
+		this.id=id;
 		this.firstName = firstName;
 		this.lastName = lastName;
 	}
 	
+	public Customer() {
+		// TODO Auto-generated constructor stub
+	}
+	public void setId(long id)
+	{
+		this.id=id;
+	}
+	public long getId () {
+		return id;
+	}	
+
 	public String getFirstName() {
 		return firstName;
 	}

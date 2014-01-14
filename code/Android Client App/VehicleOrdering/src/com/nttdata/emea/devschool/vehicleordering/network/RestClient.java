@@ -58,7 +58,7 @@ public class RestClient {
 		this.rpc = rpc;
 	}
 
-	public void call(String url, List<NameValuePair> parameters, OnRestResponse onReponse) throws NetworkErrorException {
+	public void callPost(String url, List<NameValuePair> parameters, OnRestResponse onReponse) throws NetworkErrorException {
 
 		HttpPost http = new HttpPost(getServer() + "/"+ url);
     	
@@ -83,6 +83,11 @@ public class RestClient {
 		}
 
 	}
+	public void callGet(String url, List<NameValuePair> parameters, OnRestResponse onReponse)
+	{
+		
+	}
+	
 
 	public void get(String url, OnRestResponse onReponse) {
     	

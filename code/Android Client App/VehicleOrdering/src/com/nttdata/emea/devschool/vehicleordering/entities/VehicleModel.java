@@ -1,21 +1,29 @@
 package com.nttdata.emea.devschool.vehicleordering.entities;
 
-public class VehicleModel extends AbstractEntity
+public class VehicleModel
 {
 	private String name;
 	private VehicleType type;
 	private String description;
 	private String imageUrl;
 	private long priceInEuroCent;
+	private long id;
 	
 	public VehicleModel (long id, String name, VehicleType type, String description, String imageUrl, long priceInEuroCent)
 	{
-		super(id);
+		this.id=id;
 		this.name = name;
 		this.type = type;
 		this.description = description;
 		this.imageUrl = imageUrl;
 		this.priceInEuroCent = priceInEuroCent;
+	}
+	public long getId () {
+		return id;
+	}	
+	public void setId(long id)
+	{
+		this.id=id;
 	}
 	
 	public String getName() {

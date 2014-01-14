@@ -10,13 +10,13 @@ import android.widget.TextView;
 import com.nttdata.emea.devschool.vehicleordering.R;
 import com.nttdata.emea.devschool.vehicleordering.data.DataSourceSingleton;
 import com.nttdata.emea.devschool.vehicleordering.entities.Customer;
-import com.nttdata.emea.devschool.vehicleordering.entities.VehicleOrder;
+import com.nttdata.emea.devschool.vehicleordering.entities.Order;
 import com.nttdata.emea.devschool.vehicleordering.utility.Convertor;
 import com.nttdata.emea.devschool.vehicleordering.utility.ExtraKeys;
 
 public class ViewOrderDetailsActivity extends Activity
 {
-	private VehicleOrder order;
+	private Order order;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState)

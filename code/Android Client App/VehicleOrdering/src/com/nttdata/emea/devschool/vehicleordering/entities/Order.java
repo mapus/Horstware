@@ -2,29 +2,41 @@ package com.nttdata.emea.devschool.vehicleordering.entities;
 
 import java.util.Date;
 
-public class VehicleOrder extends AbstractEntity
+import org.simpleframework.xml.Element;
+import org.simpleframework.xml.Root;
+
+@Root
+public class Order
 {
+	@Element
 	private Customer customer;
 	private VehicleModel model;
+	@Element(name="amount")
 	private int quantity;
+	private String date;
 	private Date deliveryDate;
+	@Element
+	private long id;
 	
-	public VehicleOrder (long id, Customer customer, VehicleModel model, int quantity, Date deliveryDate)
+	public Order (long id, Customer customer, VehicleModel model, int quantity, Date deliveryDate)
 	{
-		super(id);
+		this.id=id;
 		this.customer = customer;
 		this.model = model;
 		this.quantity = quantity;
 		this.deliveryDate = deliveryDate;
 	}
-	public VehicleOrder()
+	public Order()
 	{
 		super();
 		
 	}
+	public long getId () {
+		return id;
+	}	
 	public void setId(long id)
 	{
-		super.setId(id);
+		this.id=id;
 	}
 	
 	public Customer getCustomer() {
@@ -78,7 +90,7 @@ public class VehicleOrder extends AbstractEntity
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		VehicleOrder other = (VehicleOrder) obj;
+		Order other = (Order) obj;
 		if (quantity != other.quantity)
 			return false;
 		if (customer == null) {

@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.nttdata.emea.devschool.vehicleordering.entities.Customer;
 import com.nttdata.emea.devschool.vehicleordering.entities.VehicleModel;
-import com.nttdata.emea.devschool.vehicleordering.entities.VehicleOrder;
+import com.nttdata.emea.devschool.vehicleordering.entities.Order;
 import com.nttdata.emea.devschool.vehicleordering.entities.VehicleType;
 
 public interface DataSource
@@ -22,8 +22,8 @@ public interface DataSource
 	public List<Customer> retrieveCustomers ();
 	public List<Customer> findCustomers (String firstName, String lastName);
 	
-	public VehicleOrder createVehicleOrder (Customer customer, VehicleModel model, int quantity, Date deliveryDate);
-	public VehicleOrder retrieveVehicleOrder (long id);
-	public List<VehicleOrder> retrieveVehicleOrders ();
-	public List<VehicleOrder> retrieveVehicleOrders (String filterByCustomersFirstName, String filterByCustomersLastName, VehicleModel filterByModel);
+	public Order createVehicleOrder (Customer customer, VehicleModel model, int quantity, Date deliveryDate);
+	public Order retrieveVehicleOrder (long id);
+	public List<Order> retrieveVehicleOrders ();
+	public List<Order> retrieveVehicleOrders (String filterByCustomersFirstName, String filterByCustomersLastName, VehicleModel filterByModel);
 }

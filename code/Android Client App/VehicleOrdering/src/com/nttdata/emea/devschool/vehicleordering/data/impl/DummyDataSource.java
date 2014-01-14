@@ -10,7 +10,7 @@ import java.util.Map;
 import com.nttdata.emea.devschool.vehicleordering.data.DataSource;
 import com.nttdata.emea.devschool.vehicleordering.entities.Customer;
 import com.nttdata.emea.devschool.vehicleordering.entities.VehicleModel;
-import com.nttdata.emea.devschool.vehicleordering.entities.VehicleOrder;
+import com.nttdata.emea.devschool.vehicleordering.entities.Order;
 import com.nttdata.emea.devschool.vehicleordering.entities.VehicleType;
 
 public class DummyDataSource implements DataSource
@@ -18,7 +18,7 @@ public class DummyDataSource implements DataSource
 	private static Map<Long, Customer> customers;
 	private static Map<Long, VehicleModel> vehicleModels;
 	private static Map<Long, VehicleType> vehicleTypes;
-	private static Map<Long, VehicleOrder> vehicleOrders;
+	private static Map<Long, Order> vehicleOrders;
 	
 	private static long customerIdCounter;
 	private static long vehicleOrderIdCounter;
@@ -28,7 +28,7 @@ public class DummyDataSource implements DataSource
 		customers = new HashMap<Long, Customer>();
 		vehicleModels = new HashMap<Long, VehicleModel>();
 		vehicleTypes = new HashMap<Long, VehicleType>();
-		vehicleOrders = new HashMap<Long, VehicleOrder>();
+		vehicleOrders = new HashMap<Long, Order>();
 		
 		Customer customer1 = new Customer(1, "Jon", "Doe");
 		Customer customer2 = new Customer(2, "Jane", "Dove");
@@ -61,12 +61,12 @@ public class DummyDataSource implements DataSource
 		calendar.set(Calendar.DAY_OF_MONTH, 24);
 		Date deliveryDate = calendar.getTime();
 		
-		VehicleOrder vehicleOrder1 = new VehicleOrder(1, customer1, model1, 6, deliveryDate);
-		VehicleOrder vehicleOrder2 = new VehicleOrder(2, customer1, model2, 1, deliveryDate);
-		VehicleOrder vehicleOrder3 = new VehicleOrder(3, customer2, model1, 5, deliveryDate);
-		VehicleOrder vehicleOrder4 = new VehicleOrder(4, customer2, model3, 2, deliveryDate);
-		VehicleOrder vehicleOrder5 = new VehicleOrder(5, customer3, model2, 4, deliveryDate);
-		VehicleOrder vehicleOrder6 = new VehicleOrder(6, customer3, model4, 3, deliveryDate);
+		Order vehicleOrder1 = new Order(1, customer1, model1, 6, deliveryDate);
+		Order vehicleOrder2 = new Order(2, customer1, model2, 1, deliveryDate);
+		Order vehicleOrder3 = new Order(3, customer2, model1, 5, deliveryDate);
+		Order vehicleOrder4 = new Order(4, customer2, model3, 2, deliveryDate);
+		Order vehicleOrder5 = new Order(5, customer3, model2, 4, deliveryDate);
+		Order vehicleOrder6 = new Order(6, customer3, model4, 3, deliveryDate);
 		vehicleOrders.put(vehicleOrder1.getId(), vehicleOrder1);
 		vehicleOrders.put(vehicleOrder2.getId(), vehicleOrder2);
 		vehicleOrders.put(vehicleOrder3.getId(), vehicleOrder3);
@@ -150,21 +150,21 @@ public class DummyDataSource implements DataSource
 	}
 	
 	@Override
-	public VehicleOrder retrieveVehicleOrder (long id)
+	public Order retrieveVehicleOrder (long id)
 	{
 		return vehicleOrders.get(id);
 	}
 	
 	@Override
-	public List<VehicleOrder> retrieveVehicleOrders ()
+	public List<Order> retrieveVehicleOrders ()
 	{
-		return new ArrayList<VehicleOrder>(vehicleOrders.values());
+		return new ArrayList<Order>(vehicleOrders.values());
 	}
 	
 	@Override
-	public List<VehicleOrder> retrieveVehicleOrders(String filterByCustomersFirstName, String filterByCustomersLastName, VehicleModel filterByModel)
+	public List<Order> retrieveVehicleOrders(String filterByCustomersFirstName, String filterByCustomersLastName, VehicleModel filterByModel)
 	{
-		List<VehicleOrder> results = new ArrayList<VehicleOrder>(vehicleOrders.values());
+		List<Order> results = new ArrayList<Order>(vehicleOrders.values());
 		if(filterByCustomersFirstName != null)
 		{
 			filterVehicleOrdersByCustomersFirstName(results, filterByCustomersFirstName);
@@ -181,14 +181,14 @@ public class DummyDataSource implements DataSource
 	}
 	
 	@Override
-	public VehicleOrder createVehicleOrder(Customer customer, VehicleModel model, int quantity, Date deliveryDate)
+	public Order createVehicleOrder(Customer customer, VehicleModel model, int quantity, Date deliveryDate)
 	{
-		VehicleOrder newOrder = new VehicleOrder(++vehicleOrderIdCounter, customer, model, quantity, deliveryDate);
+		Order newOrder = new Order(++vehicleOrderIdCounter, customer, model, quantity, deliveryDate);
 		vehicleOrders.put(newOrder.getId(), newOrder);
 		return newOrder;
 	}
 	
-	private void filterVehicleOrdersByCustomersFirstName(List<VehicleOrder> vehicleOrders, String firstName)
+	private void filterVehicleOrdersByCustomersFirstName(List<Order> vehicleOrders, String firstName)
 	{
 		for(int index = vehicleOrders.size() - 1 ; index >= 0 ; index--)
 		{
@@ -200,7 +200,7 @@ public class DummyDataSource implements DataSource
 		}
 	}
 	
-	private void filterVehicleOrdersByCustomersLastName(List<VehicleOrder> vehicleOrders, String lastName)
+	private void filterVehicleOrdersByCustomersLastName(List<Order> vehicleOrders, String lastName)
 	{
 		for(int index = vehicleOrders.size() - 1 ; index >= 0 ; index--)
 		{
@@ -212,7 +212,7 @@ public class DummyDataSource implements DataSource
 		}
 	}
 	
-	private void filterVehicleOrdersByModel(List<VehicleOrder> vehicleOrders, VehicleModel model)
+	private void filterVehicleOrdersByModel(List<Order> vehicleOrders, VehicleModel model)
 	{
 		for(int index = vehicleOrders.size() - 1 ; index >= 0 ; index--)
 		{

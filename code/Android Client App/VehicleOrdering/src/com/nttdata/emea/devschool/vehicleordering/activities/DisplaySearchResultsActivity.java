@@ -16,12 +16,12 @@ import android.widget.ListView;
 import com.nttdata.emea.devschool.vehicleordering.R;
 import com.nttdata.emea.devschool.vehicleordering.data.DataSourceSingleton;
 import com.nttdata.emea.devschool.vehicleordering.entities.VehicleModel;
-import com.nttdata.emea.devschool.vehicleordering.entities.VehicleOrder;
+import com.nttdata.emea.devschool.vehicleordering.entities.Order;
 import com.nttdata.emea.devschool.vehicleordering.utility.ExtraKeys;
 
 public class DisplaySearchResultsActivity extends Activity
 {
-	private List<VehicleOrder> orders;
+	private List<Order> orders;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -34,7 +34,7 @@ public class DisplaySearchResultsActivity extends Activity
 		setupOrderList();
 	}
 	
-	private List<VehicleOrder> searchOrders ()
+	private List<Order> searchOrders ()
 	{
 		Bundle extras = getIntent().getExtras();
 		
@@ -103,7 +103,7 @@ public class DisplaySearchResultsActivity extends Activity
 		List<String> entries = new ArrayList<String>();
 		if(orders.size() > 0)
 		{
-			for(VehicleOrder order : orders)
+			for(Order order : orders)
 			{
 				entries.add(order.toString());
 			}

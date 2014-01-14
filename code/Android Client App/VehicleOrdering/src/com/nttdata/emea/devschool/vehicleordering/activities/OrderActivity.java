@@ -17,7 +17,7 @@ import com.nttdata.emea.devschool.vehicleordering.data.DataSource;
 import com.nttdata.emea.devschool.vehicleordering.data.DataSourceSingleton;
 import com.nttdata.emea.devschool.vehicleordering.entities.Customer;
 import com.nttdata.emea.devschool.vehicleordering.entities.VehicleModel;
-import com.nttdata.emea.devschool.vehicleordering.entities.VehicleOrder;
+import com.nttdata.emea.devschool.vehicleordering.entities.Order;
 import com.nttdata.emea.devschool.vehicleordering.exceptions.InvalidDeliveryDateException;
 import com.nttdata.emea.devschool.vehicleordering.exceptions.InvalidNameException;
 import com.nttdata.emea.devschool.vehicleordering.exceptions.InvalidQuantityException;
@@ -49,7 +49,7 @@ public class OrderActivity extends Activity
 	{
 		if(valid())
 		{
-			VehicleOrder order = createOrder();
+			Order order = createOrder();
 			startViewOrderDetailsActivity(order);
 		}
 	}
@@ -108,7 +108,7 @@ public class OrderActivity extends Activity
 		tv.setError(msg);
 	}
 	
-	private VehicleOrder createOrder ()
+	private Order createOrder ()
 	{
 		String firstName, lastName;
 		int quantity;
@@ -139,12 +139,12 @@ public class OrderActivity extends Activity
 			customer = dataSource.createCustomer(firstName, lastName);
 		}
 		
-		VehicleOrder order = dataSource.createVehicleOrder(customer, model, quantity, deliveryDate);
+		Order order = dataSource.createVehicleOrder(customer, model, quantity, deliveryDate);
 		
 		return order;
 	}
 	
-	private void startViewOrderDetailsActivity (VehicleOrder order)
+	private void startViewOrderDetailsActivity (Order order)
 	{
 		Intent intent = new Intent(this, ViewOrderDetailsActivity.class);
 		intent.putExtra(ExtraKeys.ORDER_ID, order.getId());
