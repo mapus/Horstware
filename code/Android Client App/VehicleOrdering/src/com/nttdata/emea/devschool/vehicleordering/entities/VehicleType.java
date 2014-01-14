@@ -9,6 +9,14 @@ public class VehicleType extends AbstractEntity
 		super(id);
 		this.name = name;
 	}
+	public VehicleType()
+	{
+		
+	}
+	public void setId(long id)
+	{
+		super.setId(id);
+	}
 	
 	public String getName() {
 		return name;
@@ -16,7 +24,6 @@ public class VehicleType extends AbstractEntity
 	public void setName(String name) {
 		this.name = name;
 	}
-	
 	@Override
 	public int hashCode() {
 		final int prime = 31;

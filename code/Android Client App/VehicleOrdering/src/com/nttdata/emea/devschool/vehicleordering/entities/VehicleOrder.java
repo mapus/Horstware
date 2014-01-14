@@ -17,6 +17,15 @@ public class VehicleOrder extends AbstractEntity
 		this.quantity = quantity;
 		this.deliveryDate = deliveryDate;
 	}
+	public VehicleOrder()
+	{
+		super();
+		
+	}
+	public void setId(long id)
+	{
+		super.setId(id);
+	}
 	
 	public Customer getCustomer() {
 		return customer;

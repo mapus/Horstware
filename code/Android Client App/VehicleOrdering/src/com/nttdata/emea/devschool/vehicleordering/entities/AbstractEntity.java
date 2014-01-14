@@ -8,11 +8,17 @@ public abstract class AbstractEntity
 	{
 		this.id = id;
 	}
-	
+	protected AbstractEntity()
+	{
+		
+	}
+	public void setId(long id)
+	{
+		this.id=id;
+	}
 	public long getId () {
 		return id;
-	}
-	
+	}	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
