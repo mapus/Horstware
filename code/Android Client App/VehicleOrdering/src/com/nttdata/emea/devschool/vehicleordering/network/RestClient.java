@@ -21,6 +21,7 @@ import org.apache.http.util.EntityUtils;
 
 import android.accounts.NetworkErrorException;
 import android.os.AsyncTask;
+import android.util.Log;
 
 public class RestClient {
 
@@ -58,31 +59,7 @@ public class RestClient {
 		this.rpc = rpc;
 	}
 
-	public void callPost(String url, List<NameValuePair> parameters, OnRestResponse onReponse) throws NetworkErrorException {
-
-		HttpPost http = new HttpPost(getServer() + "/"+ url);
-    	
-		
-    	for(NameValuePair h : headers) {
-    		http.addHeader(h.getName(), h.getValue());
-        }
-    	
-    	try {
-
-    		http.setEntity(new UrlEncodedFormEntity(parameters));
-    		
-    	} catch (UnsupportedEncodingException e) {
-			onReponse.onError(501, e.getLocalizedMessage());
-		} finally {
-
-			RestRequest restRequest = new RestRequest();
-	    	restRequest.setOnReponse(onReponse);
-	    	restRequest.setRequest(http);
-	    	restRequest.execute();
-
-		}
-
-	}
+	
 	public void callGet(String url, List<NameValuePair> parameters, OnRestResponse onReponse)
 	{
 		
@@ -98,6 +75,7 @@ public class RestClient {
 	public void post(String url, List<NameValuePair> parameters, OnRestResponse onReponse) throws NetworkErrorException {
     	
 		HttpPost request = new HttpPost(getServer() + "/" + url);
+
         
     	try {
     		
