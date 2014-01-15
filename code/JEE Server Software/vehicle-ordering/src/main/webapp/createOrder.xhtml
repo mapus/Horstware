@@ -1,0 +1,54 @@
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/WEB-INF/layout/template.xhtml">
+	
+	<ui:define name="pageTitle">Create Order</ui:define>
+	
+	<ui:define name="pageContent">
+		<h1>Create Order</h1>
+		<p>
+			<h:outputText value="How many cars do you want to buy?"/>
+		</p>
+		<h:form>
+			<div>
+				<h:outputText value="First Name"/>
+				<h:inputText id ="firstName" value="#{createOrderBB.firstName}" validatorMessage="First name must not be empty.">
+					<f:validateRequired/>
+				</h:inputText>
+				<h:message for="firstName" style="color:red"/>
+			</div>
+			<div>
+				<h:outputText value="Last Name"/>
+				<h:inputText id="lastName" value="#{createOrderBB.lastName}" validatorMessage="Last name must not be empty.">
+					<f:validateRequired/>
+				</h:inputText>
+				<h:message for="lastName" style="color:red"/>
+			</div>
+			<div>
+				<h:outputText value="Amount"/>
+				<h:inputText value="#{createOrderBB.amount}"/>
+			</div>
+			<div>
+				<h:outputText value="Delivery Date"/>
+				<h:inputText id="deliveryDate" value="#{createOrderBB.deliveryDate}">
+					<f:converter converterId="com.nttdata.emea.devschool.vehicleordering.converter.DateConverter"/>
+					<f:validator validatorId="com.nttdata.emea.devschool.vehicleordering.validator.WorkDateValidator"/>
+				</h:inputText>
+				<h:message for="deliveryDate" style="color:red"/>
+			</div>
+			<div>
+				<h:outputText value="Model"/>
+				<h:selectOneMenu value="#{createOrderBB.modelId}">
+					<f:selectItems value="#{createOrderBB.availableModels}" var="model" itemValue="#{model.id}" itemLabel="#{model.name}"/>
+				</h:selectOneMenu>
+			</div>
+			<div>
+				<h:commandButton value="create order" action="#{createOrderBB.createOrder}"/>
+			</div>
+		</h:form>
+	</ui:define>
+	
+</ui:composition>
