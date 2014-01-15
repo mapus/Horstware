@@ -4,13 +4,15 @@ import java.util.Date;
 
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
+import org.simpleframework.xml.Serializer;
+import org.simpleframework.xml.core.Persister;
 
 @Root(name="order")
 public class Order
 {
 	@Element
 	private Customer customer;
-	@Element
+	@Element(name="model")
 	private VehicleModel model;
 	@Element(name="amount")
 	private int quantity;
@@ -27,10 +29,10 @@ public class Order
 		this.model = model;
 		this.quantity = quantity;
 		this.deliveryDate = deliveryDate;
+		
 	}
 	public Order()
 	{
-		super();
 		
 	}
 	public long getId () {

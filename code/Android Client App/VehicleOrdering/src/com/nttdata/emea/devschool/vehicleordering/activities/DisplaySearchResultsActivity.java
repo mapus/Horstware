@@ -10,6 +10,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -43,22 +44,28 @@ public class DisplaySearchResultsActivity extends Activity
 		if(extras == null)
 		{
 			VehicleOrderingAPI api = VehicleOrderingAPI.getInstance();
-			api.getModels(new OnRestResponse()
+			api.getOrders(new OnRestResponse()
 			{
 				@Override
 				public void onResponse(String response)
 				{
-					try
-					{
+
+						Log.d("lol","lol");
+						Log.d("lol",response);
 						Serializer serializer = new Persister();
-						XMLVehicleOrderResponse xmlVehicleOrderResponse = serializer.read(XMLVehicleOrderResponse.class, response);
+						XMLVehicleOrderResponse xmlVehicleOrderResponse = null;
+						try {
+							
+							xmlVehicleOrderResponse = serializer.read(XMLVehicleOrderResponse.class, response);
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+
 						orders = xmlVehicleOrderResponse.getOrders();
+						Log.d("size",orders.size()+"");
 						setupOrderList();
-					}
-					catch (Exception e)
-					{
-						new RuntimeException(e);
-					}
+
 				}
 				
 				@Override
@@ -76,11 +83,15 @@ public class DisplaySearchResultsActivity extends Activity
 				@Override
 				public void onResponse(String response)
 				{
+					Log.d("derp","test");
 					try
 					{
 						Serializer serializer = new Persister();
 						XMLVehicleOrderResponse xmlVehicleOrderResponse = serializer.read(XMLVehicleOrderResponse.class, response);
+						
+
 						orders = xmlVehicleOrderResponse.getOrders();
+
 						setupOrderList();
 					}
 					catch (Exception e)
