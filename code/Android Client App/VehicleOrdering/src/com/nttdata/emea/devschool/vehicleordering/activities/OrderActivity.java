@@ -6,6 +6,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import org.simpleframework.xml.Serializer;
+import org.simpleframework.xml.core.Persister;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -21,6 +24,8 @@ import com.nttdata.emea.devschool.vehicleordering.entities.Order;
 import com.nttdata.emea.devschool.vehicleordering.exceptions.InvalidDeliveryDateException;
 import com.nttdata.emea.devschool.vehicleordering.exceptions.InvalidNameException;
 import com.nttdata.emea.devschool.vehicleordering.exceptions.InvalidQuantityException;
+import com.nttdata.emea.devschool.vehicleordering.network.OnRestResponse;
+import com.nttdata.emea.devschool.vehicleordering.network.VehicleOrderingAPI;
 import com.nttdata.emea.devschool.vehicleordering.utility.ExtraKeys;
 
 public class OrderActivity extends Activity
@@ -34,9 +39,28 @@ public class OrderActivity extends Activity
 		setContentView(R.layout.activity_order);
 		
 		long modelId = getIntent().getExtras().getLong(ExtraKeys.MODEL_ID);
-		model = DataSourceSingleton.getInstance().retrieveVehicleModel(modelId);
-		
-		setModelName();
+		VehicleOrderingAPI api = VehicleOrderingAPI.getInstance();
+		api.getModel(modelId, new OnRestResponse()
+		{
+			@Override
+			public void onResponse(String response)
+			{
+				try
+				{
+					Serializer serializer = new Persister();
+					XMLModelResponse xmlModelResponse = serializer.read(XMLModelResponse.class, response);
+					model = xmlModelResponse.getModels().get(0);
+					setModelName();
+				}
+				catch (Exception e)
+				{
+					new RuntimeException(e);
+				}
+			}
+			
+			@Override
+			public void onError(Integer errorCode, String errorMessage) {}
+		});
 	}
 	
 	private void setModelName ()

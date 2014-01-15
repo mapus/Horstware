@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.nttdata.emea.devschool.vehicleordering.R;
-import com.nttdata.emea.devschool.vehicleordering.network.VehicleOrderingAPI;
 
 public class MainMenuActivity extends Activity
 {
@@ -19,10 +18,8 @@ public class MainMenuActivity extends Activity
 	
 	public void browseModels (View view)
 	{
-		VehicleOrderingAPI api = VehicleOrderingAPI.getInstance();
-		api.getOrders();
-		//Intent intent = new Intent(this, BrowseModelsActivity.class);
-		//startActivity(intent);
+		Intent intent = new Intent(this, BrowseModelsActivity.class);
+		startActivity(intent);
 	}
 	
 	public void searchOrders (View view)

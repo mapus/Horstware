@@ -3,6 +3,9 @@ package com.nttdata.emea.devschool.vehicleordering.activities;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.simpleframework.xml.Serializer;
+import org.simpleframework.xml.core.Persister;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,6 +19,8 @@ import android.widget.TextView;
 import com.nttdata.emea.devschool.vehicleordering.R;
 import com.nttdata.emea.devschool.vehicleordering.data.DataSourceSingleton;
 import com.nttdata.emea.devschool.vehicleordering.entities.VehicleModel;
+import com.nttdata.emea.devschool.vehicleordering.network.OnRestResponse;
+import com.nttdata.emea.devschool.vehicleordering.network.VehicleOrderingAPI;
 import com.nttdata.emea.devschool.vehicleordering.utility.ExtraKeys;
 
 public class SearchOrdersActivity extends Activity
@@ -32,10 +37,29 @@ public class SearchOrdersActivity extends Activity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_search_orders);
 		
-		models = DataSourceSingleton.getInstance().retrieveVehicleModels();
-		selectedModel = null;
-		
-		setupModelSpinner();
+		VehicleOrderingAPI api = VehicleOrderingAPI.getInstance();
+		api.getModels(new OnRestResponse()
+		{
+			@Override
+			public void onResponse(String response)
+			{
+				try
+				{
+					Serializer serializer = new Persister();
+					XMLModelResponse xmlModelResponse = serializer.read(XMLModelResponse.class, response);
+					models = xmlModelResponse.getModels();
+					setupModelSpinner();
+					selectedModel = null;
+				}
+				catch (Exception e)
+				{
+					new RuntimeException(e);
+				}
+			}
+			
+			@Override
+			public void onError(Integer errorCode, String errorMessage) {}
+		});
 	}
 	
 	private void setupModelSpinner()

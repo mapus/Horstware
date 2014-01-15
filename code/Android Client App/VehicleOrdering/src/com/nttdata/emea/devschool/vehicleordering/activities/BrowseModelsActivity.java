@@ -3,6 +3,9 @@ package com.nttdata.emea.devschool.vehicleordering.activities;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.simpleframework.xml.Serializer;
+import org.simpleframework.xml.core.Persister;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -19,7 +22,10 @@ import com.nttdata.emea.devschool.vehicleordering.R;
 import com.nttdata.emea.devschool.vehicleordering.data.DataSourceSingleton;
 import com.nttdata.emea.devschool.vehicleordering.entities.VehicleModel;
 import com.nttdata.emea.devschool.vehicleordering.entities.VehicleType;
+import com.nttdata.emea.devschool.vehicleordering.network.OnRestResponse;
+import com.nttdata.emea.devschool.vehicleordering.network.VehicleOrderingAPI;
 import com.nttdata.emea.devschool.vehicleordering.utility.ExtraKeys;
+import com.nttdata.emea.devschool.vehicleordering.xml.impl.XMLTypeResponse;
 
 public class BrowseModelsActivity extends Activity
 {
@@ -38,11 +44,30 @@ public class BrowseModelsActivity extends Activity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_browse_models);
 		
-		types = DataSourceSingleton.getInstance().retrieveVehicleTypes();
-		models = new ArrayList<VehicleModel>();
-		
-		setupTypeSpinner();
-		setupModelList();
+		VehicleOrderingAPI api = VehicleOrderingAPI.getInstance();
+		api.getTypes(new OnRestResponse()
+		{
+			@Override
+			public void onResponse(String response)
+			{
+				try
+				{
+					Serializer serializer = new Persister();
+					XMLTypeResponse xmlTypeResponse = serializer.read(XMLTypeResponse.class, response);
+					types = xmlTypeResponse.getTypes();
+					models = new ArrayList<VehicleModel>();
+					setupTypeSpinner();
+					setupModelList();
+				}
+				catch (Exception e)
+				{
+					new RuntimeException(e);
+				}
+			}
+			
+			@Override
+			public void onError(Integer errorCode, String errorMessage) {}
+		});
 	}
 	
 	private void setupTypeSpinner ()
@@ -80,7 +105,6 @@ public class BrowseModelsActivity extends Activity
 			public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
 			{
 				updateModels(position);
-				updateModelList();
 			}
 			
 			@Override
@@ -116,12 +140,34 @@ public class BrowseModelsActivity extends Activity
 		if(typeSpinnerPosition == TYPE_SPINNER_DEFAULT_ENTRY_POSITION)
 		{
 			models.clear();
+			updateModelList();
 		}
 		else
 		{
 			int index = typeSpinnerPosition - TYPE_SPINNER_DEFAULT_ENTRY_OFFSET;
 			VehicleType filterByType = types.get(index);
-			models = DataSourceSingleton.getInstance().retrieveVehicleModels(filterByType);
+			VehicleOrderingAPI api = VehicleOrderingAPI.getInstance();
+			api.getModels(filterByType.getId(), new OnRestResponse()
+			{
+				@Override
+				public void onResponse(String response)
+				{
+					try
+					{
+						Serializer serializer = new Persister();
+						XMLModelResponse xmlModelResponse = serializer.read(XmlModelResponse.class, response);
+						models = xmlModelResponse.getModels();
+						updateModelList();
+					}
+					catch (Exception e)
+					{
+						new RuntimeException(e);
+					}
+				}
+				
+				@Override
+				public void onError(Integer errorCode, String errorMessage) {}
+			});
 		}
 	}
 	

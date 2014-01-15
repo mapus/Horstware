@@ -3,16 +3,21 @@ package com.nttdata.emea.devschool.vehicleordering.activities;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
+import org.simpleframework.xml.Serializer;
+import org.simpleframework.xml.core.Persister;
+
 import android.app.Activity;
 import android.os.Bundle;
 import android.widget.TextView;
 
 import com.nttdata.emea.devschool.vehicleordering.R;
-import com.nttdata.emea.devschool.vehicleordering.data.DataSourceSingleton;
 import com.nttdata.emea.devschool.vehicleordering.entities.Customer;
 import com.nttdata.emea.devschool.vehicleordering.entities.Order;
+import com.nttdata.emea.devschool.vehicleordering.network.OnRestResponse;
+import com.nttdata.emea.devschool.vehicleordering.network.VehicleOrderingAPI;
 import com.nttdata.emea.devschool.vehicleordering.utility.Convertor;
 import com.nttdata.emea.devschool.vehicleordering.utility.ExtraKeys;
+import com.nttdata.emea.devschool.vehicleordering.xml.impl.XMLVehicleOrderResponse;
 
 public class ViewOrderDetailsActivity extends Activity
 {
@@ -25,9 +30,28 @@ public class ViewOrderDetailsActivity extends Activity
 		setContentView(R.layout.activity_view_order_details);
 		
 		long orderId = getIntent().getExtras().getLong(ExtraKeys.ORDER_ID);
-		order = DataSourceSingleton.getInstance().retrieveVehicleOrder(orderId);
-		
-		fillLayoutWithContent();
+		VehicleOrderingAPI api = VehicleOrderingAPI.getInstance();
+		api.getOrder(orderId, new OnRestResponse()
+		{
+			@Override
+			public void onResponse(String response)
+			{
+				try
+				{
+					Serializer serializer = new Persister();
+					XMLVehicleOrderResponse xmlVehicleOrderResponse = serializer.read(XMLVehicleOrderResponse.class, response);
+					order = xmlVehicleOrderResponse.getOrders().get(0);
+					fillLayoutWithContent();
+				}
+				catch (Exception e)
+				{
+					new RuntimeException(e);
+				}
+			}
+			
+			@Override
+			public void onError(Integer errorCode, String errorMessage) {}
+		});
 	}
 	
 	private void fillLayoutWithContent ()

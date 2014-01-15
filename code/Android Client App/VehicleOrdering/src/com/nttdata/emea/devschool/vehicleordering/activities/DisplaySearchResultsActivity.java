@@ -3,6 +3,9 @@ package com.nttdata.emea.devschool.vehicleordering.activities;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.simpleframework.xml.Serializer;
+import org.simpleframework.xml.core.Persister;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -14,10 +17,11 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.nttdata.emea.devschool.vehicleordering.R;
-import com.nttdata.emea.devschool.vehicleordering.data.DataSourceSingleton;
-import com.nttdata.emea.devschool.vehicleordering.entities.VehicleModel;
 import com.nttdata.emea.devschool.vehicleordering.entities.Order;
+import com.nttdata.emea.devschool.vehicleordering.network.OnRestResponse;
+import com.nttdata.emea.devschool.vehicleordering.network.VehicleOrderingAPI;
 import com.nttdata.emea.devschool.vehicleordering.utility.ExtraKeys;
+import com.nttdata.emea.devschool.vehicleordering.xml.impl.XMLVehicleOrderResponse;
 
 public class DisplaySearchResultsActivity extends Activity
 {
@@ -29,25 +33,65 @@ public class DisplaySearchResultsActivity extends Activity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_display_search_results);
 		
-		orders = searchOrders();
-		
-		setupOrderList();
+		searchOrders();
 	}
 	
-	private List<Order> searchOrders ()
+	private void searchOrders ()
 	{
 		Bundle extras = getIntent().getExtras();
 		
 		if(extras == null)
 		{
-			return DataSourceSingleton.getInstance().retrieveVehicleOrders();
+			VehicleOrderingAPI api = VehicleOrderingAPI.getInstance();
+			api.getModels(new OnRestResponse()
+			{
+				@Override
+				public void onResponse(String response)
+				{
+					try
+					{
+						Serializer serializer = new Persister();
+						XMLVehicleOrderResponse xmlVehicleOrderResponse = serializer.read(XMLVehicleOrderResponse.class, response);
+						orders = xmlVehicleOrderResponse.getOrders();
+						setupOrderList();
+					}
+					catch (Exception e)
+					{
+						new RuntimeException(e);
+					}
+				}
+				
+				@Override
+				public void onError(Integer errorCode, String errorMessage) {}
+			});
 		}
 		else
 		{
 			String firstNameFilter = getFirstNameFilter(extras);
 			String lastNameFilter = getLastNameFilter(extras);
-			VehicleModel modelFilter = getModelFilter(extras);
-			return DataSourceSingleton.getInstance().retrieveVehicleOrders(firstNameFilter, lastNameFilter, modelFilter);
+			Long modelIdFilter = getModelFilter(extras);
+			VehicleOrderingAPI api = VehicleOrderingAPI.getInstance();
+			api.getOrders(firstNameFilter, lastNameFilter, modelIdFilter, new OnRestResponse()
+			{
+				@Override
+				public void onResponse(String response)
+				{
+					try
+					{
+						Serializer serializer = new Persister();
+						XMLVehicleOrderResponse xmlVehicleOrderResponse = serializer.read(XMLVehicleOrderResponse.class, response);
+						orders = xmlVehicleOrderResponse.getOrders();
+						setupOrderList();
+					}
+					catch (Exception e)
+					{
+						new RuntimeException(e);
+					}
+				}
+				
+				@Override
+				public void onError(Integer errorCode, String errorMessage) {}
+			});
 		}
 	}
 	
@@ -77,13 +121,13 @@ public class DisplaySearchResultsActivity extends Activity
 		}
 	}
 	
-	private VehicleModel getModelFilter (Bundle extras)
+	private Long getModelFilter (Bundle extras)
 	{
 		boolean filterByModel = extras.getBoolean(ExtraKeys.FILTER_BY_MODEL);
 		if(filterByModel)
 		{
-			long modelId = extras.getLong(ExtraKeys.MODEL_ID);
-			return DataSourceSingleton.getInstance().retrieveVehicleModel(modelId);
+			Long modelId = extras.getLong(ExtraKeys.MODEL_ID);
+			return modelId;
 		}
 		else 
 		{
