@@ -5,14 +5,16 @@ import java.util.Date;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
 
-@Root
+@Root(name="order")
 public class Order
 {
 	@Element
 	private Customer customer;
+	@Element
 	private VehicleModel model;
 	@Element(name="amount")
 	private int quantity;
+	@Element(name="deliveryDate")
 	private String date;
 	private Date deliveryDate;
 	@Element

@@ -1,8 +1,14 @@
 package com.nttdata.emea.devschool.vehicleordering.entities;
 
+import org.simpleframework.xml.Element;
+import org.simpleframework.xml.Root;
+
+@Root(name="type")
 public class VehicleType
 {
+	@Element
 	private String name;
+	@Element
 	private long id;
 	
 	public VehicleType (long id, String name)

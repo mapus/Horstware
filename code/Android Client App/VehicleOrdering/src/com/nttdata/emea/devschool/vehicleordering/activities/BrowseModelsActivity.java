@@ -19,13 +19,13 @@ import android.widget.ListView;
 import android.widget.Spinner;
 
 import com.nttdata.emea.devschool.vehicleordering.R;
-import com.nttdata.emea.devschool.vehicleordering.data.DataSourceSingleton;
 import com.nttdata.emea.devschool.vehicleordering.entities.VehicleModel;
 import com.nttdata.emea.devschool.vehicleordering.entities.VehicleType;
 import com.nttdata.emea.devschool.vehicleordering.network.OnRestResponse;
 import com.nttdata.emea.devschool.vehicleordering.network.VehicleOrderingAPI;
 import com.nttdata.emea.devschool.vehicleordering.utility.ExtraKeys;
 import com.nttdata.emea.devschool.vehicleordering.xml.impl.XMLTypeResponse;
+import com.nttdata.emea.devschool.vehicleordering.xml.impl.XMLVehicleModelResponse;
 
 public class BrowseModelsActivity extends Activity
 {
@@ -155,7 +155,7 @@ public class BrowseModelsActivity extends Activity
 					try
 					{
 						Serializer serializer = new Persister();
-						XMLModelResponse xmlModelResponse = serializer.read(XmlModelResponse.class, response);
+						XMLVehicleModelResponse xmlModelResponse = serializer.read(XMLVehicleModelResponse.class, response);
 						models = xmlModelResponse.getModels();
 						updateModelList();
 					}

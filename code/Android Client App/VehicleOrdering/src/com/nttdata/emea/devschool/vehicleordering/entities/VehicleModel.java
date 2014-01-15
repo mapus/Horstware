@@ -1,13 +1,17 @@
 package com.nttdata.emea.devschool.vehicleordering.entities;
 
+import org.simpleframework.xml.Element;
+import org.simpleframework.xml.Root;
+
+@Root(name="model")
 public class VehicleModel
 {
-	private String name;
-	private VehicleType type;
-	private String description;
-	private String imageUrl;
-	private long priceInEuroCent;
-	private long id;
+	@Element private String name;
+	@Element private VehicleType type;
+	@Element private String description;
+	@Element private String imageUrl;
+	@Element private long priceInEuroCent;
+	@Element private long id;
 	
 	public VehicleModel (long id, String name, VehicleType type, String description, String imageUrl, long priceInEuroCent)
 	{
@@ -18,6 +22,9 @@ public class VehicleModel
 		this.imageUrl = imageUrl;
 		this.priceInEuroCent = priceInEuroCent;
 	}
+	
+	public VehicleModel () {}
+	
 	public long getId () {
 		return id;
 	}	

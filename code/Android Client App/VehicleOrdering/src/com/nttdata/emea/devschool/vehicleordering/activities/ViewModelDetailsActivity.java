@@ -2,7 +2,6 @@ package com.nttdata.emea.devschool.vehicleordering.activities;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
 
 import org.simpleframework.xml.Serializer;
 import org.simpleframework.xml.core.Persister;
@@ -19,13 +18,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.nttdata.emea.devschool.vehicleordering.R;
-import com.nttdata.emea.devschool.vehicleordering.data.DataSourceSingleton;
 import com.nttdata.emea.devschool.vehicleordering.entities.VehicleModel;
 import com.nttdata.emea.devschool.vehicleordering.network.OnRestResponse;
 import com.nttdata.emea.devschool.vehicleordering.network.VehicleOrderingAPI;
 import com.nttdata.emea.devschool.vehicleordering.utility.Convertor;
 import com.nttdata.emea.devschool.vehicleordering.utility.ExtraKeys;
-import com.nttdata.emea.devschool.vehicleordering.xml.impl.XMLTypeResponse;
+import com.nttdata.emea.devschool.vehicleordering.xml.impl.XMLVehicleModelResponse;
 
 public class ViewModelDetailsActivity extends Activity
 {
@@ -47,7 +45,7 @@ public class ViewModelDetailsActivity extends Activity
 				try
 				{
 					Serializer serializer = new Persister();
-					XMLModelResponse xmlModelResponse = serializer.read(XMLModelResponse.class, response);
+					XMLVehicleModelResponse xmlModelResponse = serializer.read(XMLVehicleModelResponse.class, response);
 					model = xmlModelResponse.getModels().get(0);
 					fillLayoutWithContent();
 				}

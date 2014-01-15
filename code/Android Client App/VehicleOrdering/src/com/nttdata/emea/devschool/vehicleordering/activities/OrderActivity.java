@@ -19,14 +19,15 @@ import com.nttdata.emea.devschool.vehicleordering.R;
 import com.nttdata.emea.devschool.vehicleordering.data.DataSource;
 import com.nttdata.emea.devschool.vehicleordering.data.DataSourceSingleton;
 import com.nttdata.emea.devschool.vehicleordering.entities.Customer;
-import com.nttdata.emea.devschool.vehicleordering.entities.VehicleModel;
 import com.nttdata.emea.devschool.vehicleordering.entities.Order;
+import com.nttdata.emea.devschool.vehicleordering.entities.VehicleModel;
 import com.nttdata.emea.devschool.vehicleordering.exceptions.InvalidDeliveryDateException;
 import com.nttdata.emea.devschool.vehicleordering.exceptions.InvalidNameException;
 import com.nttdata.emea.devschool.vehicleordering.exceptions.InvalidQuantityException;
 import com.nttdata.emea.devschool.vehicleordering.network.OnRestResponse;
 import com.nttdata.emea.devschool.vehicleordering.network.VehicleOrderingAPI;
 import com.nttdata.emea.devschool.vehicleordering.utility.ExtraKeys;
+import com.nttdata.emea.devschool.vehicleordering.xml.impl.XMLVehicleModelResponse;
 
 public class OrderActivity extends Activity
 {
@@ -48,7 +49,7 @@ public class OrderActivity extends Activity
 				try
 				{
 					Serializer serializer = new Persister();
-					XMLModelResponse xmlModelResponse = serializer.read(XMLModelResponse.class, response);
+					XMLVehicleModelResponse xmlModelResponse = serializer.read(XMLVehicleModelResponse.class, response);
 					model = xmlModelResponse.getModels().get(0);
 					setModelName();
 				}
