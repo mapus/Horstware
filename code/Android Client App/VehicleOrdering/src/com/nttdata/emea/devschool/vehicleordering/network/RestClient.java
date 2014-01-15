@@ -13,6 +13,7 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpPut;
 import org.apache.http.client.methods.HttpUriRequest;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
@@ -31,6 +32,9 @@ public class RestClient {
     private ArrayList <NameValuePair> headers;
     private String server;
     private String rpc;
+    
+    private boolean responseReceived=false;
+    private String response="";
 
 
     public RestClient(String server)
@@ -43,6 +47,14 @@ public class RestClient {
     public void addHeader(String name, String value)
     {
     	headers.add(new BasicNameValuePair(name, value));
+    }
+    public boolean responseReceived()
+    {
+    	return this.responseReceived;
+    }
+    public String getResponse()
+    {
+    	return this.response;
     }
     
     public String getServer() {
@@ -72,14 +84,15 @@ public class RestClient {
     	buildAndSend(request, onReponse);    	
     }
 
-	public void post(String url, List<NameValuePair> parameters, OnRestResponse onReponse) throws NetworkErrorException {
+	public void post(String url, String body, OnRestResponse onReponse) throws NetworkErrorException {
     	
 		HttpPost request = new HttpPost(getServer() + "/" + url);
 
         
     	try {
     		
-    		request.setEntity(new UrlEncodedFormEntity(parameters));
+    		request.setEntity(new StringEntity(body));
+    		
     		
     	} catch (UnsupportedEncodingException e) {
 			onReponse.onError(501, e.getLocalizedMessage());
@@ -185,7 +198,11 @@ public class RestClient {
 			if(getOnReponse() != null){
 				if(result != null){
 					getOnReponse().onResponse(result);
+					response=result;
+					responseReceived=true;
 				}else{
+					response=result;
+					responseReceived=true;
 					getOnReponse().onError(getErrorCode(), getErrorMessage());
 				}
 			}
