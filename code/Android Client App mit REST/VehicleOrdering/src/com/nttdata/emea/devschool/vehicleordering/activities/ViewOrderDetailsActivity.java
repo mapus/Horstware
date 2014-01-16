@@ -1,7 +1,9 @@
 package com.nttdata.emea.devschool.vehicleordering.activities;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import org.simpleframework.xml.Serializer;
 import org.simpleframework.xml.core.Persister;
@@ -104,8 +106,7 @@ public class ViewOrderDetailsActivity extends Activity
 	private void setDeliveryDate ()
 	{
 		TextView deliveryDateView = (TextView) findViewById(R.id.viewOrderDetails_deliveryDate);
-		String text = SimpleDateFormat.getDateInstance(DateFormat.SHORT).format(order.getDeliveryDate());
-		deliveryDateView.setText(text);
+		deliveryDateView.setText(order.date);
 	}
 	
 	@Override

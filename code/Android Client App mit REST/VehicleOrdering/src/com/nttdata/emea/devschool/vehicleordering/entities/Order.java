@@ -4,8 +4,6 @@ import java.util.Date;
 
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
-import org.simpleframework.xml.Serializer;
-import org.simpleframework.xml.core.Persister;
 
 @Root(name="order")
 public class Order
@@ -17,7 +15,7 @@ public class Order
 	@Element(name="amount")
 	private int quantity;
 	@Element(name="deliveryDate")
-	private String date;
+	public String date;
 	private Date deliveryDate;
 	@Element
 	private long id;
